@@ -1,0 +1,59 @@
+---
+purpose: agent-lookup-and-mutate-protocol
+process: /10x-engineer
+adapter: .cursor/skills/${adapter}/SKILL.md
+---
+
+# Docs / working memory
+
+${jira_line} ${memory_commit}
+
+Process lives in `/10x-engineer`, `/${adapter}`, and `.cursor/rules/${slug}-ai-native-engineering.mdc`. Do not copy skill graphs here.
+
+Ticket dirs under `planning/tickets/<KEY>/` are the engineering contract. Do not paste PRD or ADR bodies into ticket INDEX files.
+
+## Agent read order
+
+1. This file (once).
+2. [`TOOLS.md`](TOOLS.md) if the job needs code location or a PR.
+3. [`INDEX.md`](INDEX.md) — honor `layout`, `current`, and path keys. Then the folder INDEX it points at.
+4. Honor `phase`, `skill`, and `ticket`. One ticket spec: `planning/tickets/<KEY>/INDEX.md`.
+5. That ticket's `plan.md` if it exists — implementer SoT (how + the decisions that apply).
+6. Sprint/epic `decisions.md` only to append / look up an `id` cited in `plan.md`.
+7. Next: that folder's `progress.md`.
+
+## Ticket dir
+
+```
+planning/tickets/<KEY>/INDEX.md    spec — AC, current, out_of_scope, seams
+planning/tickets/<KEY>/plan.md     implementer SoT — how, inlined decisions, test matrix
+```
+
+`plan.md` is required before `/implement` on a code slice. Parked / not-yet-grilled tickets may be INDEX only. If `plan.md` is silent on a choice, **stop and ask**. Do not guess.
+
+INDEX keys: `seams` (public surface), `tests` (existing test files), `create` (new files — dir or purpose, not a filename). Extra key for this repo: `${index_keys}` (`scenes` = packed scenes dir+purpose; `alembic` = dir+head, not a revision filename; `none` = omit).
+
+`current` vs `ac` is the hop. Graft to verify, not to learn whether a thing exists.
+
+## Status
+
+- `todo` — spec exists, not started
+- `doing` — implement chat is on it
+- `in_review` — slice implemented; not yet merged to `${default_branch}`
+- `done` — **only** when merged to `${default_branch}`
+- `parked` / `dropped` / `dup`
+
+Implement **must not** set `done`. After a slice: `in_review`. Then `/code-review` in a new chat. `ship-ticket` closes the markdown board after merge.
+
+## Sessions
+
+1. **Plan** — INDEX.md + `plan.md`. No product code. Do not spawn `/implement` from this chat.
+2. **Implement** — `/implement <KEY>` in a new chat. Execute the plan. Set `in_review`.
+3. **Review** — `/code-review` after a commit. Report only. Do not patch.
+
+## Human reading order
+
+1. [../CONTEXT.md](../CONTEXT.md) — glossary (repo root)
+2. This folder's INDEX and board
+3. `CHANGELOG.md` — what has shipped
+4. `decisions/` — why we chose this

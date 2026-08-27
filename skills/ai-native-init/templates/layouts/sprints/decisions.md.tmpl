@@ -1,0 +1,15 @@
+---
+sprint: S00
+---
+
+```yaml
+- id: Q1
+  decision: layout is ${layout} (INDEX.layout). Do not assume epics/ or sprints/ in the alwaysApply rule
+  not: hardcode a foreign repo's folder shape
+- id: Q2
+  decision: ticket is a dir — INDEX.md (spec) + plan.md (implementer SoT)
+  not: flat tickets/<KEY>.md as the contract
+- id: Q3
+  decision: done only after merge to ${default_branch}; implement sets in_review
+  not: set done from the implement chat
+```

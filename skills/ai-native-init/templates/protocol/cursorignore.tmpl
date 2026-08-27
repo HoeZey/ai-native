@@ -1,0 +1,9 @@
+# .gitignore hides graft/ (and ${root}/ when that tree is gitignored) from Agent Glob/Grep.
+# `!` here is the Cursor override (parent-dir gitignore needs dir + descendants).
+!/graft/
+!/graft/**
+!/${root}/
+!/${root}/**
+
+graft/.cache/
+graft/.graph/

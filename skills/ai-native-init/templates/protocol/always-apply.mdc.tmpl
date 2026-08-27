@@ -1,0 +1,33 @@
+---
+description: >-
+  Use 10x-engineer for plan/design/implement; read ${root}/ for sprint
+  memory and tools. Do not copy skill graphs into this rule.
+alwaysApply: true
+---
+
+# ${slug_title} AI-native engineering
+
+Planning, design, or implementation in this repo: read and follow
+`/10x-engineer` then `/${adapter}` (path remaps). One skill per turn.
+Do not invent a workflow. Do not restate either skill's tables here.
+
+${jira_line}
+
+If `${root}/INDEX.md` exists, read it. Honor `layout`, `current`, and path
+keys (`sprints_dir`, `tickets_dir`). Then read that folder INDEX.
+Honor `phase`, `skill`, and `ticket`. Then read that named skill's `SKILL.md`.
+
+If `${root}/TOOLS.md` exists, use those tools. Skip MCPs that are missing.
+Graft first for file/symbol discovery (`ask`, `callers`, `skeleton`,
+`map`) before grep or reading a whole file.
+
+Lookup: `${root}/README.md` → `TOOLS.md` → INDEX (via `layout`) → one
+`tickets/<KEY>/INDEX.md` then that ticket's `plan.md`. Decisions that
+apply are inlined in `plan.md`. Next work from `progress.md`. Mutate
+`${root}/` per `README.md`. Plan chat writes spec + `plan.md`; implement
+executes and sets `in_review`; `/code-review` reports only. `done` only
+after merge to `${default_branch}`. After AC, `ship-ticket` if there is a
+markdown board. INDEX is not the board.
+
+No ticket AC in this rule. No copy of skill text. ${memory_commit}
+`graft/` is gitignored; `.cursorignore` re-includes it for Agent Glob/Grep.

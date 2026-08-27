@@ -1,0 +1,37 @@
+---
+name: ${adapter}
+description: >-
+  Maps 10x skills onto this repo: markdown board and/or local ticket dirs
+  instead of assuming Jira paths. CONTEXT.md glossary at repo root, decisions
+  under ${root}/decisions/. Adapter only — does not run grill, PRD, or implement.
+---
+
+# ${slug_title} adapter
+
+Adapter. Not a second 10x. Invoke **one** 10x skill per turn; this file only remaps paths.
+
+## Paths
+
+| 10x default | Here |
+|-------------|------|
+| `CONTEXT.md` glossary | `CONTEXT.md` (repo root, glossary only) |
+| `docs/adrs/` | `${root}/decisions/` |
+| Jira board | `${root}/planning/board.md` (markdown) or Jira (if that is the tracker) |
+| Jira issue | `${root}/planning/tickets/<ID>/INDEX.md` + `plan.md` |
+| Working memory | `${root}/` (`${root}/INDEX.md` router) |
+| Changelog | `${root}/CHANGELOG.md` or `CHANGELOG.md` |
+
+## Phase remaps
+
+- **grill-me-with-docs** — read root `CONTEXT.md`. ADRs under `${root}/decisions/`.
+- **wayfinder** — markdown map under `${root}/planning/maps/` if present. No Jira epic unless this repo uses Jira.
+- **to-issues** — quiz, then write `${root}/planning/tickets/<ID>/INDEX.md` (`## current` / `## ac`) and a thin card on the board or backlog. `plan.md` is the plan chat, not this skill.
+- **implement** — Story is `${root}/INDEX.md`'s `ticket` → that dir's INDEX.md + plan.md. Execute the plan; set `in_review`, not `done`. After merge to `${default_branch}`, `ship-ticket` if markdown board.
+- **code-review** — spec source is INDEX.md + plan.md. Report only.
+- **qa** — missing feature or bug → ticket dir + board/backlog card.
+
+## Do not
+
+- Run grill / PRD / implement from this skill
+- Pack a second in-progress card (WIP 1 is `scrum-master`)
+- Treat INDEX or `progress.md` as the board
