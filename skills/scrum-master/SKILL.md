@@ -1,7 +1,9 @@
 ---
 name: scrum-master
 description: >-
-  Solo part-time PM. Standups, sprint review, WIP 1, must vs stretch. Reads
+  Solo part-time PM for a personal WIP-1 practice. Not part of the
+  engineering, planning, or all presets. Standups, sprint review, must vs
+  stretch. Reads
   pm-state, board, changelog, and the INDEX router. Use when the user says
   standup, sprint review, /scrum, or "what's next this sprint". Does not close
   tickets (that is ship-ticket). Does not nag during coding.
@@ -34,11 +36,11 @@ Read in order:
 3. `{root}/CHANGELOG.md` or `CHANGELOG.md` (`## Unreleased` + latest sprint heading)
 4. Last 1–3 entries of `{root}/planning/sprint-log.md`
 5. Current/next headings in `{root}/planning/backlog.md` (not icebox unless asked)
-6. `{root}/INDEX.md` then that sprint/epic INDEX (`phase` / `skill` / `ticket`) and `progress.md`
+6. `{root}/INDEX.md` then the active feature, sprint, or epic INDEX (`phase` / `skill` / `ticket`) and `progress.md`. When `layout` is `features`, the schedule is `{root}/sprint-planning/`, not the ticket spec.
 7. `git status` and `git log` since `pm-state` `Updated:`
 8. `CONTEXT.md` (glossary) and current sprint in `{root}/planning/roadmap.md` if it exists
 
-Ticket bodies are dirs: `{root}/planning/tickets/<ID>/INDEX.md`. Do not look for `tickets/<ID>.md`.
+Ticket bodies are dirs. When `layout` is `features`: `{root}/features/<feature>/tickets/<ID>/INDEX.md` (or `done/<ID>/` after ship). Otherwise `{root}/planning/tickets/<ID>/INDEX.md`. Do not look for `tickets/<ID>.md`.
 
 If `pm-state` disagrees with board or changelog, **files win**. Rewrite `pm-state`, say what drifted, then continue.
 

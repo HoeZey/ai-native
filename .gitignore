@@ -4,3 +4,7 @@ __pycache__/
 .venv/
 .ignore
 graft/
+
+# AI-native (generated graph + session notes)
+.handoff/
+.tmp-consumer-tests/

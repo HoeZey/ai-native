@@ -6,32 +6,40 @@ description: >-
   under ${root}/decisions/. Adapter only — does not run grill, PRD, or implement.
 ---
 
+<!-- ai-native:generated:begin -->
 # ${slug_title} adapter
 
 Adapter. Not a second 10x. Invoke **one** 10x skill per turn; this file only remaps paths.
+
+Read `${root}/.ai-native.yml` for `packs`, `board`, `default_branch`, `decision_policy`, and `tracker`. Read `.cursor/rules/${slug}-project.mdc` for project conventions.
 
 ## Paths
 
 | 10x default | Here |
 |-------------|------|
 | `CONTEXT.md` glossary | `CONTEXT.md` (repo root, glossary only) |
-| `docs/adrs/` | `${root}/decisions/` |
-| Jira board | `${root}/planning/board.md` (markdown) or Jira (if that is the tracker) |
-| Jira issue | `${root}/planning/tickets/<ID>/INDEX.md` + `plan.md` |
+| `docs/adrs/` | `${root}/decisions/` after the whole feature has merged and promotion evidence passes. Until then: preliminary records for this `layout` |
+| Jira board | `${root}/planning/board.md` when `board` is markdown, or the configured tracker |
+| Jira issue | `layout: features` → `${root}/features/<feature>/tickets/<ID>/INDEX.md` + `plan.md`. Otherwise `${root}/planning/tickets/<ID>/INDEX.md` + `plan.md` |
 | Working memory | `${root}/` (`${root}/INDEX.md` router) |
 | Changelog | `${root}/CHANGELOG.md` or `CHANGELOG.md` |
 
 ## Phase remaps
 
-- **grill-me-with-docs** — read root `CONTEXT.md`. ADRs under `${root}/decisions/`.
-- **wayfinder** — markdown map under `${root}/planning/maps/` if present. No Jira epic unless this repo uses Jira.
-- **to-issues** — quiz, then write `${root}/planning/tickets/<ID>/INDEX.md` (`## current` / `## ac`) and a thin card on the board or backlog. `plan.md` is the plan chat, not this skill.
-- **implement** — Story is `${root}/INDEX.md`'s `ticket` → that dir's INDEX.md + plan.md. Execute the plan; set `in_review`, not `done`. After merge to `${default_branch}`, `ship-ticket` if markdown board.
+- **grill-me-with-docs** — read root `CONTEXT.md`. Pack default: new decisions are preliminary, not accepted history. If `decision_policy` is `locked_on_record`, honor that store and do not relocate it.
+- **wayfinder** — one destination, one map. Markdown maps live under `${root}/planning/maps/` when present. A Jira epic only when `tracker.kind` is `jira` and the user asks to publish.
+- **to-issues** — quiz, then write the ticket dir for this `layout` (`features/<feature>/tickets/<ID>/` or `planning/tickets/<ID>/`) with `## current` / `## ac` and a thin card when the board is markdown. Parent/child grouping is links, not nested directories. `plan.md` is the plan chat, not this skill. Tracker writes only when the user asks.
+- **implement** — Story is `${root}/INDEX.md`'s `ticket` → that dir's INDEX.md + plan.md. Execute the plan; set `in_review`, not `done`. After merge to `${default_branch}`, `ship-ticket` if `board` is markdown. Do not promote feature decisions from a ticket close.
 - **code-review** — spec source is INDEX.md + plan.md. Report only.
-- **qa** — missing feature or bug → ticket dir + board/backlog card.
+- **qa** — missing feature or bug → that layout's ticket dir, plus a board card when the board is markdown.
 
 ## Do not
 
 - Run grill / PRD / implement from this skill
-- Pack a second in-progress card (WIP 1 is `scrum-master`)
+- Invent a WIP limit. A project that wants one sets it in `.cursor/rules/${slug}-project.mdc`
 - Treat INDEX or `progress.md` as the board
+- Write the tracker unless the user explicitly asks
+<!-- ai-native:generated:end -->
+
+<!-- ai-native:project:begin -->
+<!-- ai-native:project:end -->

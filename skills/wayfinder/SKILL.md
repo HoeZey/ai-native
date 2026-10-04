@@ -1,10 +1,10 @@
 ---
 name: wayfinder
 description: >-
-  Chart a large, foggy effort as a map of decision tickets on Jira, then
-  resolve them one at a time until the route is clear. Use when the user says
-  "wayfinder", the work will not fit one grilling session, or an epic's path
-  is still foggy. Plans; does not implement.
+  Chart a large, foggy effort as a map of decision tickets, then resolve them
+  one at a time until the route is clear. Use when the user says "wayfinder",
+  the work will not fit one grilling session, or a destination's path is still
+  foggy. Plans; does not implement.
 disable-model-invocation: true
 ---
 
@@ -16,12 +16,12 @@ Session count, not project size: if one `grill-me` sitting can settle it, skip t
 
 ## Hard rules
 
-1. **One Jira epic = one map.** Not "V1". A sprawling destination goes stale.
+1. **One destination = one map.** When the tracker is Jira, that destination is one epic. Not "V1". A sprawling destination goes stale.
 2. **Decision tickets are questions**, never "build the X". If a ticket reads as a sprint story, it belongs in `to-issues` after the map clears.
-3. **Do not mix issue types.** Map = Jira Epic. Children = Tasks (or another non-Story type). Never dump the map into a sprint.
+3. **Do not mix issue types.** The map is the parent. Children are decision tickets, not implementation stories. When Jira is configured, use the project's non-story type for children. Never dump the map into a sprint.
 4. **One ticket per session** (research may run in parallel). Charting does not resolve tickets.
 5. **No production code.** `task` unblocks a decision (access, sample data). It is not a slice of the build.
-6. **No Jira until the quiz is approved.** Draft markdown → quiz → then Atlassian MCP.
+6. **No tracker writes until the quiz is approved.** Draft markdown first. Publish only where the project tracks work, and only if the user agrees.
 7. When the map is clear, **hand off to `write-a-prd`**. Do not skip the spec. Do not call `to-issues` on the map itself. Do not call `tdd`.
 
 ## Ticket types
@@ -38,7 +38,7 @@ Every child is HITL (needs the user) or AFK (agent alone).
 ## Map body
 
 ```markdown
-# Map: <epic name>
+# Map: <destination>
 
 ## Destination
 <one or two lines — what "done planning" looks like, usually a spec colleagues can review>
@@ -53,7 +53,7 @@ Every child is HITL (needs the user) or AFK (agent alone).
 <fog — questions you can tell are coming but cannot phrase sharply yet>
 
 ## Out of scope
-<ruled out of this epic; never graduates>
+<ruled out of this destination; never graduates>
 ```
 
 The map is an **index**, not a store. The answer lives on the ticket. The map gists and links.
@@ -84,7 +84,7 @@ grilling | research | prototype | task
 2. Breadth-first grill: fan out across the space. If this surfaces **no fog** and the whole path fits one session, stop — you don't need a map.
 3. Draft the map + only the tickets you can specify now. Leave the rest in **Not yet specified**.
 4. Quiz: destination, ticket list (title / type / blocked-by), fog vs out-of-scope. Iterate until approved.
-5. Publish via Atlassian MCP: Epic = map; children linked to the epic; `is blocked by` issue links. Research tickets may start in the background after publish.
+5. Publish only after the quiz, and only where the project tracks work. Markdown: write the map under `{root}/planning/maps/<slug>.md` (`root` from `context/INDEX.md`, else `docs/INDEX.md`) and link decision tickets from it. Do not require Jira. Jira: when `tracker.kind` is `jira` and the user agrees, the epic is the map and children link to that epic, using the project's issue types. If the tracker has no hierarchy capability, keep the map in markdown and say so. Research tickets may start in the background after publish.
 6. Stop. Do not resolve a grilling ticket in the charting session.
 
 ### Work through the map
@@ -102,4 +102,8 @@ When no tickets remain and fog is empty: tell the user the map is clear and the 
 
 - Agent writes product code because a `task` looked like a build slice → stop, retitle as a question or move it to `to-issues` later.
 - Agent answers its own grilling questions → HITL is broken; wait for the user.
-- Destination is "the whole product" → shrink to one epic before charting.
+- Destination is "the whole product" → shrink to one destination before charting.
+
+## Lineage
+
+Compressed from [Matt Pocock's wayfinder](https://github.com/mattpocock/skills). Jira + Atlassian MCP instead of the plugin tracker. One-question grilling (BONDage), not frontier rounds.

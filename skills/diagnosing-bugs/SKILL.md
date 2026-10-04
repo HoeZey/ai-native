@@ -71,3 +71,7 @@ No correct seam: that is the finding. Don't fake a unit test that can't catch th
 - Winning hypothesis in the commit / PR message
 
 No auto-commit unless asked.
+
+## Lineage
+
+Compressed from [Matt Pocock's diagnosing-bugs](https://github.com/mattpocock/skills). Regression uses local Beck `tdd`. No plugin HITL template.

@@ -1,0 +1,39 @@
+---
+description: >-
+  Use 10x-engineer for plan/design/implement; read context/ for sprint
+  memory and tools. Do not copy skill graphs into this rule.
+alwaysApply: true
+---
+
+# Ai Native AI-native engineering
+
+Planning, design, or implementation in this repo: read and follow
+`/10x-engineer` then `/10x-ai-native` (path remaps). One skill per turn.
+Do not invent a workflow. Do not restate either skill's tables here.
+
+This repo has no Jira. Product, PM, and engineering contract live under `context/`.
+
+If `.cursor/rules/ai-native-project.mdc` exists, read it for project conventions.
+`packs`, `board`, `default_branch`, `decision_policy`, and `tracker` live in `context/.ai-native.yml`.
+
+If `context/INDEX.md` exists, read it. Honor `layout`, `current`,
+`current_feature`, and path keys (`features_dir`, `sprint_planning_dir`,
+`sprints_dir`, `tickets_dir`). Then read that folder INDEX.
+Honor `phase`, `skill`, and `ticket`. Then read that named skill's `SKILL.md`.
+
+If `context/TOOLS.md` exists, use those tools. Skip MCPs that are missing.
+Graft first for file/symbol discovery (`ask`, `callers`, `skeleton`,
+`map`) before grep or reading a whole file.
+
+Lookup: `context/README.md` → `TOOLS.md` → INDEX (via `layout`) → one
+ticket `INDEX.md` (under `features/<feature>/tickets/` when `layout` is
+`features`, otherwise `planning/tickets/`) then that ticket's `plan.md`.
+Preliminary decisions can change until the feature merges. Decisions that
+apply are inlined in `plan.md`. Next work from `progress.md`. Mutate
+`context/` per `README.md`. Plan chat writes spec + `plan.md`; implement
+executes and sets `in_review`; `/code-review` reports only. `done` only
+after merge to `main`. After that merge, `ship-ticket` if `board`
+is markdown. Do not promote feature decisions from a ticket close. INDEX is not the board.
+
+No ticket AC in this rule. No copy of skill text. `context/` is committed working memory.
+`graft/` is gitignored; `.cursorignore` re-includes it for Agent Glob/Grep.

@@ -1,0 +1,19 @@
+{
+  "pack": "0.1.0",
+  "packs": [
+    "all"
+  ],
+  "root": "context",
+  "layout": "features",
+  "clone": "personal",
+  "default_branch": "main",
+  "slug": "ai-native",
+  "board": "markdown",
+  "tools": [
+    "graft",
+    "github"
+  ],
+  "index_keys": "none",
+  "decision_policy": "preliminary_until_feature_merge",
+  "github_repo": "HoeZey/ai-native"
+}
