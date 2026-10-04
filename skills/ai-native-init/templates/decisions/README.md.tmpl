@@ -1,20 +1,24 @@
 # Decision records
 
-One file per call that a future-you would not reconstruct from the code.
+Final decisions only. A record lands here when its whole feature has merged to ${default_branch} and promotion evidence passes. Closing one ticket does not copy records here.
+
+In-flight choices stay preliminary. On `layout: features` that is `features/<feature>/decisions/<id>.md`. On `sprints` or `epics` it is that folder's `decisions.md` log. Rewrite those preliminary records when the choice changes, and update references if an id changes. Do not copy them here early, and do not refuse a needed change because a preliminary id exists.
+
+If `decision_policy` is `locked_on_record`, leave this folder alone unless that project's own instructions say otherwise.
 
 ## Format
 
 ```markdown
 # NNN — short title
 
-- **Status:** accepted | proposed | superseded
+- **Status:** accepted | superseded
 - **Date:** YYYY-MM-DD
 - **Context:** why this came up
 - **Decision:** what we chose
 - **Consequences:** what follows, including what we rejected
 ```
 
-Number sequentially. Do not rewrite history; supersede with a new record.
+Number sequentially. Do not rewrite an accepted record in place. Supersede it with a new record.
 
 ## Index
 

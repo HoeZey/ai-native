@@ -30,11 +30,11 @@ Not on the planning path (`wayfinder` → PRD → `to-issues`). Not a replacemen
    - **Hard bug** (no tight repro, intermittent, "staring at code"): file what you have, then **`diagnosing-bugs`**. Do not guess-fix from this skill.
    - **Missing feature** → `to-issues` slice; say so if the PRD didn't cover it.
    - **Working-as-designed** → explain; glossary/ADR only if non-obvious.
-6. **Read [`template.md`](template.md).** Write. Publish to Jira as a Story (or Bug) under the epic **after** the user agrees — same quiz-before-publish habit as `to-issues`. If the repo uses a markdown board instead of Jira, write `docs/planning/tickets/<ID>.md` and a thin card (see that repo’s board adapter). Do not start `ship-ticket` from filing.
+6. **Read [`template.md`](template.md).** Write. Discover `{root}` from `context/INDEX.md`, else `docs/INDEX.md`, and `layout` / `board` / `tracker` from `{root}/.ai-native.yml`. Write the ticket in that layout's ticket directory (`features/<feature>/tickets/<ID>/INDEX.md` or `planning/tickets/<ID>/INDEX.md`) and a thin card when `board` is markdown. Publish to Jira only when `tracker.kind` is `jira` and the user agrees — same quiz-before-publish habit as `to-issues`. Use the project's parent link when hierarchy is a declared capability. Do not create a `docs/planning/` tree. Do not start `ship-ticket` from filing.
 
 ## Closing a fix
 
-When the user confirms a filed issue is actually fixed and should leave the board: run `ship-ticket` if `docs/planning/board.md` and a changelog exist. Otherwise close Jira only if they ask. This skill still does not implement the fix.
+When the user confirms a filed issue has merged to `default_branch`: if `board` is markdown and `ship-ticket` is installed, run it. If the tracker is external, transition only when they explicitly ask. Do not create a markdown board in order to close a tracker issue. Do not promote feature decisions from a single fix. This skill still does not implement the fix.
 
 ## Hard rules
 

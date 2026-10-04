@@ -20,7 +20,7 @@ Prevent LLM context rot. Decisions, not code. Link, don't duplicate. Cross-cutti
 ## Workflow
 
 1. Pick a location: `.handoff/<feature-slug>.md` (committed if days away; tmp if same-session).
-2. Pull in: `grill-me` decisions log, wayfinder Decisions so far (link the epic), `research.md` (link), prototype **decisions** only, new `CONTEXT.md` entries / ADRs.
+2. Pull in: `grill-me` decisions log, wayfinder Decisions so far (link the map), `research.md` (link), prototype **decisions** only, new `CONTEXT.md` entries, and preliminary decision records. Do not copy preliminary records into `{root}/decisions/` as accepted history.
 3. Write using the template below.
 4. Tell the user where it is and which skill comes next.
 
@@ -36,7 +36,7 @@ Prevent LLM context rot. Decisions, not code. Link, don't duplicate. Cross-cutti
 - <decision> — because <reason>
 
 ## Research artifacts
-- [research.md](path) · [ADR-NNN](path) · [wayfinder map](jira-url)
+- [research.md](path) · [preliminary decision](path) · [wayfinder map](path-or-tracker-url)
 
 ## Prototype outcomes
 - Question: <probed> · Decision: <learned>

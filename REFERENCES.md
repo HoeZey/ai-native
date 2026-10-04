@@ -12,7 +12,7 @@ Local deltas in this catalog:
 - `10x-engineer` still defaults to **Jira**. Markdown-board / `context/` remaps live in the generated `10x-<slug>` adapter, not in the router.
 - `code-review` is report-only (two axes: Standards vs Spec).
 - `ship-ticket` closes a markdown board after merge; Jira-only repos skip it.
-- `scrum-master` is a solo PM loop (WIP 1, INDEX is not the board).
+- `scrum-master` is a solo PM loop (WIP 1, INDEX is not the board). It is not in the engineering, planning, or all presets.
 
 ## Memory layer
 

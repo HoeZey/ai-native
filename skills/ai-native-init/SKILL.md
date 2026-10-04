@@ -14,19 +14,23 @@ Seed working memory into the **current git repo**. Do not copy Quota or Jarvis d
 
 ## Preconditions
 
-- `/10x-engineer` is installed (this catalog). If missing: `npx skills add git@github.com:HoeZey/ai-native.git`
+- `/10x-engineer` is installed (this catalog). If missing, from a catalog clone run `python3 scripts/select-pack.py --preset engineering` and use the printed command. A bare `npx skills add` is not the `all` preset.
 - Cwd is a git repo. Stop if not.
 
-## Parameters (ask if missing; then run)
+## Parameters (inspect first)
+
+Read an existing `{root}/.ai-native.yml`, adapter, and `.cursor/rules/<slug>-project.mdc` before asking. Reuse recorded `packs`, `decision_policy`, `tracker`, and branch. Ask only for material choices that are still missing.
 
 | Flag | Default | Notes |
 |------|---------|--------|
 | `--root` | `context` | `docs` if they already want the contract in `docs/` |
-| `--layout` | `sprints` | `epics` or `flat` |
+| `--layout` | `features` | `sprints`, `epics`, or `flat` |
 | `--clone` | `personal` | `work` gitignores `{root}/` |
 | `--default-branch` | `main` | e.g. `develop` |
 | `--slug` | (required) | `10x-<slug>` + rule filename |
-| `--board` | `markdown` | `jira` skips markdown board files |
+| `--board` | `markdown` | `jira` skips markdown board files and records a `tracker` object |
+| `--packs` | `engineering` | `planning`, `all`, or `engineering,planning`. Sprint notes are seeded only when planning or all is included. Stored as given — `engineering,planning` is not rewritten to `all` |
+| `--decision-policy` | `preliminary_until_feature_merge` | `locked_on_record` keeps an existing locked store. Do not set that to change another repo's policy |
 | `--tools` | `graft,github` | add `godot` / `atlassian` |
 | `--index-keys` | `none` | `scenes` or `alembic` |
 | `--github-repo` | empty | `HoeZey/quota` |

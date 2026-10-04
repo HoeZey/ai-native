@@ -47,3 +47,7 @@ Can't pick one → scope is too big. Cut it.
    ```
 
 5. Hand the **decision** off via `handoff` (or onto the wayfinder ticket). Delete the code.
+
+## Lineage
+
+Two-question split from [Matt Pocock's prototype](https://github.com/mattpocock/skills). Time-box and delete-over-commit kept (BONDage).

@@ -46,3 +46,7 @@ Q<N>. <question>
 4. Ask the highest-leverage unresolved frontier question.
 5. Record the answer. Loop.
 6. Close with a bullet-list **decisions log** — feeds `write-a-prd`, `prototype`, `handoff`, or a `wayfinder` ticket.
+
+## Credit
+
+Original mental model: [Matt Pocock's `/grill-me`](https://github.com/mattpocock/skills). One-question-per-turn kept (BONDage / May 2026 Matt); current Matt default is frontier rounds.

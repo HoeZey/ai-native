@@ -1,0 +1,13 @@
+---
+description: >-
+  Project-owned conventions for Ai Native. Upgrade does not overwrite
+  this file.
+alwaysApply: true
+---
+
+# Ai Native project notes
+
+Freeform conventions live here. Pack workflows stay in `/10x-engineer` and `/10x-ai-native`.
+Do not copy those workflows into this rule.
+
+This repo's board is markdown and its merge branch is `main`. S00 stays unshipped until those tickets merge.

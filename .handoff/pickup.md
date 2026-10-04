@@ -2,6 +2,10 @@
 
 Catalog clone: `/Users/joselee/my-projects/ai-native` → `https://github.com/HoeZey/ai-native` (private).
 
-Already done in the creating chat: skill copy from `~/.cursor/skills/`, lineage stripped into `REFERENCES.md`, `scrum-master` generalized, `ai-native-init` / `ai-native-upgrade` + templates, CI + release-please.
+Working memory is `context/` (board, tickets, INDEX). GitHub Issues are not the tracker.
 
-Later work: first `feat:` merge to `main` so release-please opens `v0.1.0`; smoke `npx skills add git@github.com:HoeZey/ai-native.git`; Quota init with `--root docs --default-branch develop --slug quota`.
+**S00-01** (in progress): seed just ran via `/ai-native-init`. Next chat: `/implement S00-01`, then `/code-review` after a commit.
+
+**S00-02** (backlog, blocked by S00-01): uv for catalog Python (dev/CI only). Ticket: `context/features/seed/tickets/S00-02/INDEX.md`.
+
+Quota init later: `--root docs --default-branch develop --slug quota`.
