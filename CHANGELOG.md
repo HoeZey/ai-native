@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.0 (2026-10-04)
+
+
+### Features
+
+* add selectable packs and feature-scoped decisions ([00110c7](https://github.com/HoeZey/ai-native/commit/00110c77d06c92265bbfd9292eb66d47b52a5b35))
+* add selectable packs and feature-scoped decisions ([b4fe1b8](https://github.com/HoeZey/ai-native/commit/b4fe1b8b473dbfc7172f09191635b1ba64b6cf37))
+* seed 10x catalog, context/ init, and release-please ([b4bef94](https://github.com/HoeZey/ai-native/commit/b4bef9441b337ece5a08d8e64801895b533ddabf))
+
+## Changelog
+
 Owned by release-please after the first tagged release. Do not hand-edit version headings on feature PRs.
 
 ## Unreleased
