@@ -91,9 +91,12 @@ def test_engineering_and_planning_init(tmp: Path) -> None:
     planned = tmp / "planned"
     git_repo(planned)
     init(planned, "--packs", "all")
-    people = (planned / "context" / "sprint-planning" / "S00" / "people.md").read_text()
-    assert "Solo" not in people
-    assert (planned / "context" / "sprint-planning" / "README.md").is_file()
+    notes = (planned / "context" / "sprint-planning" / "S00" / "sprint.yaml").read_text()
+    assert "sprint: S00" in notes
+    assert "Solo" not in notes
+    assert not (planned / "context" / "sprint-planning" / "S00" / "people.md").exists()
+    readme = (planned / "context" / "sprint-planning" / "README.md").read_text()
+    assert "sprint.yaml" in readme
 
     legacy = tmp / "legacy"
     git_repo(legacy)

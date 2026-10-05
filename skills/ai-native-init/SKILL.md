@@ -14,7 +14,7 @@ Seed working memory into the **current git repo**. Do not copy Quota or Jarvis d
 
 ## Preconditions
 
-- `/10x-engineer` is installed (this catalog). If missing, from a catalog clone run `python3 scripts/select-pack.py --preset engineering` and use the printed command. A bare `npx skills add` is not the `all` preset.
+- `/10x-engineer` is installed (this catalog). If missing, from a catalog clone run `python3 scripts/select-pack.py --preset engineering` and use the printed command. A bare `npx skills add` is not a preset.
 - Cwd is a git repo. Stop if not.
 
 ## Parameters (inspect first)
@@ -44,7 +44,7 @@ Read an existing `{root}/.ai-native.yml`, adapter, and `.cursor/rules/<slug>-pro
 python3 scripts/init.py --target <repo-root> --slug <slug> [flags]
 ```
 
-`scripts/init.py` lives next to this `SKILL.md` after `npx skills add` (`~/.cursor/skills/ai-native-init/scripts/init.py`). If you are in the catalog clone, same relative path.
+`scripts/init.py` lives next to this `SKILL.md` after `npx skills add` (`~/.agents/skills/ai-native-init/scripts/init.py`). If you are in the catalog clone, same relative path.
 
 3. Show the script stdout. Do not hand-edit seeded protocol files in the same turn unless the script failed.
 4. If graft is on PATH: `graft build` in the target repo.

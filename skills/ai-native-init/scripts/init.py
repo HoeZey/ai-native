@@ -351,9 +351,7 @@ def main() -> None:
         if wants_planning(packs):
             write(root / "sprint-planning" / "README.md", render("layouts/features/sprint-planning-README.md.tmpl", **kw), force=False)
             sprint = root / "sprint-planning" / "S00"
-            write(sprint / "tickets.md", render("layouts/features/tickets.md.tmpl", **kw), force=False)
-            write(sprint / "schedule.md", render("layouts/features/schedule.md.tmpl", **kw), force=False)
-            write(sprint / "people.md", render("layouts/features/people.md.tmpl", **kw), force=False)
+            write(sprint / "sprint.yaml", render("layouts/features/sprint.yaml.tmpl", **kw), force=False)
         current_link = "features/seed"
     elif args.layout == "sprints":
         write(root / "INDEX.md", render("layouts/sprints/repo-INDEX.md.tmpl", **kw), force=False)

@@ -30,11 +30,13 @@ features/<feature>/tickets/<KEY>/INDEX.md    spec — AC, current, out_of_scope,
 features/<feature>/tickets/<KEY>/plan.md     implementer SoT
 features/<feature>/decisions/<id>.md         preliminary — editable until this feature merges
 features/<feature>/done/<KEY>/               after the ticket is closed post-merge
-sprint-planning/README.md                    active sprint, then tickets.md / schedule.md / people.md
+sprint-planning/README.md                    active sprint, tracker facts, write lock
+sprint-planning/<sprint>/sprint.yaml         source — commitment, pull-in, capacity, dates
+sprint-planning/<sprint>/sprint.md           generated, read-only
 decisions/                                   final — only after the feature has merged
 ```
 
-Sprint `tickets.md` is membership and order. It does not store the spec.
+`sprint.yaml` is membership, order, and capacity. It does not store the spec. `sprint.md` is generated from it.
 
 ### `layout: sprints`, `epics`, or `flat`
 
