@@ -1,6 +1,6 @@
 # AI-native
 
-Private catalog of 10x process skills, plus **init/upgrade** for a `context/` (or `docs/`) working-memory layer. Presets are `engineering`, `planning`, and `all`. `scrum-master` stays in the repo and is not part of any preset.
+Private catalog of 10x process skills, plus **init/upgrade** for a `context/` (or `docs/`) working-memory layer. Presets are `engineering`, `planning`, and `all`.
 
 Not on skills.sh. There is no `npx skills --pack` flag. From a clone of this repo, print the install command for a preset:
 
@@ -12,7 +12,7 @@ python3 scripts/select-pack.py --preset all
 
 Run the printed `npx skills add ... --skill ...` command. It installs that preset through the existing git distribution.
 
-A bare `npx skills add git@github.com:HoeZey/ai-native.git` installs every directory under `skills/`, including `scrum-master`. That is not the `all` preset.
+A bare `npx skills add git@github.com:HoeZey/ai-native.git` installs every directory under `skills/`. That command is not a preset. Presets are the explicit lists from `scripts/select-pack.py`.
 
 Update an install with `npx skills update -g`. To add or remove a pack in a consumer repo without switching the selection to `all`:
 
@@ -36,7 +36,7 @@ That writes INDEX + a feature ticket dir, a thin alwaysApply rule that **names**
 
 `/ai-native-upgrade` refreshes pack-owned protocol files and the generated adapter region from `context/.ai-native.yml` (or `docs/.ai-native.yml`). It keeps project settings, the adapter's project region, and `<slug>-project.mdc`. It does not rewrite ticket trees or INDEX `current`.
 
-`npx skills update -g` refreshes `~/.cursor/skills`. A same-named skill under a consumer repo's `.cursor/skills/` shadows the global one, so do not vendor this catalog inside a product repo.
+`npx skills update -g` refreshes `~/.agents/skills`. A same-named skill under `~/.cursor/skills` or a consumer repo's `.cursor/skills/` shadows that global install, so do not vendor this catalog inside a product repo.
 
 ## Working memory
 

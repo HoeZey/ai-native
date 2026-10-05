@@ -3,8 +3,8 @@ __pycache__/
 *.pyc
 .venv/
 .ignore
-graft/
 
 # AI-native (generated graph + session notes)
+graft/
 .handoff/
 .tmp-consumer-tests/

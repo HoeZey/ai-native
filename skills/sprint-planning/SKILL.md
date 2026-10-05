@@ -1,58 +1,102 @@
 ---
 name: sprint-planning
 description: >-
-  Plan a sprint from local notes: membership, carry-over, capacity, and
-  review timing. Refresh tracker facts only when asked. Use when the user
-  says /sprint-planning, "plan the sprint", or asks about load, carry-over,
-  or capacity. Does not implement.
-disable-model-invocation: true
+  Plan and track team sprints from a sprint.yaml per sprint: commit what fits
+  under the load limit, rank the rest to pull in, keep review-ready order, and
+  answer status from a check script. Use when the user says /sprint-planning,
+  "plan the sprint", asks about load, capacity, carry-over, what is left, who
+  owns a ticket, or when a ticket should be review-ready. Does not implement.
 ---
 
 # Sprint planning
 
-Schedule and load for one sprint. The feature contract stays under `features/<feature>/` (or the legacy ticket dir). This skill does not move specs into the sprint folder.
+Agent-first. You edit sprint.yaml, the script checks it and renders sprint.md. The user reads sprint.md and validates. Never hand-edit sprint.md.
 
-Discover `{root}` from `context/INDEX.md`, else `docs/INDEX.md`. Read `{root}/.ai-native.yml` for `board`, `default_branch`, `tracker`, and `packs`. Sprint notes, when present: `{root}/sprint-planning/<sprint>/` (`tickets.md`, `schedule.md`, `people.md`).
+## Where things live
 
-Read the notes before answering a planning or status question. If a local fact is missing, say so. Do not fetch the tracker to fill the gap unless the user asks for a refresh.
+- `{root}` is `context/`, else `docs/`.
+- Project config: `{root}/sprint-planning/README.md`. Active sprint, tracker site and project, which statuses count as done, write lock, merge deadline rule. Read it first. If a fact is missing, ask. Do not invent capacity.
+- Sprints: `{root}/sprint-planning/**/sprint-NN/sprint.yaml` plus generated `sprint.md`. Sprints that span a program may be grouped under one folder with a README for the calendar, capacity method, and scenarios.
+- Script: `scripts/sprint.py` in this skill folder. Run with `uv run <skill>/scripts/sprint.py check|render PATH`. PATH is a sprint.yaml or a folder; a folder checks every sprint under it and across them.
+- The feature contract (INDEX, plan.md, decisions) stays under the feature or ticket dir. Sprint files hold membership, order, owners, and dates only.
 
-## Notes and the tracker
+## Rules
 
-Local notes are the working plan. They may differ from the tracker on purpose.
+- **Commit, then pull in.** `tickets` is the commitment and must fit under the load limit (default 80% of capacity). `pull_in` is ranked and not counted. No stretch. Better to pull in than to push out.
+- **Row order of `tickets` is the review order.** Carry-over goes first, so it takes room before new work.
+- **Owner is a person from `capacity`, or a pool name** (BE, FE) when nobody is assigned yet.
+- **Review-ready is not sprint end.** Every `ready` date is on or before `merge_by`. A ticket is ready after its blockers.
+- **Numbers come from the script.** Do not type loads, room, or totals into goal, notes, or open questions. They drift. Write the decision instead ("Hoshe is over capacity, move TCD-1 or accept").
+- **Every edit gets a `changes` line**, newest first: `YYYY-MM-DD what changed`.
+- After any edit: `render`, then `check`. Report what `check` flags. Do not silently change a plan choice to clear a flag.
 
-- **Refresh** (only when the user asks): read the tracker and reconcile tracker-owned facts. Do not write to the tracker during a refresh.
-- **Write** (create, edit, comment, transition): only when the user explicitly asks in this conversation. A local edit is not a sync.
-- TickTick or any personal list is out of this skill unless the project companion configures it. Do not ship personal list or task ids.
+## Intents
 
-### Field ownership
+Detect which one the user wants. Load only what it needs.
 
-| Tracker-owned (refresh may update the local copy) | Local-owned (refresh must not change) |
-| --- | --- |
-| issue key, type, status, assignee, sprint id, estimate as stored in the tracker, parent key | schedule dates, review-ready dates, capacity assumptions, buffers, scenario choices, sprint order overrides, feature decisions |
+### plan (new sprint)
 
-When a tracker-owned fact disagrees with the note, update the note's tracker-fact line and append a conflict:
+1. Read the config, the previous sprint.yaml (carry-over), and the feature INDEX files that list slices, points, and blocked-by.
+2. Write `capacity` from the config method and stated days off.
+3. Readiness gate per candidate ticket: points, owner or pool, a spec link or Jira key, and every blocker done or placed earlier in this or an earlier sprint. A ticket that fails stays out or goes to `pull_in`, with the reason in `open_questions`.
+4. Add carry-over first, then fill `tickets` in review order until each person is at the load limit. Set `ready` dates in blocker order.
+5. Rank what did not fit in `pull_in`.
+6. Write a one-sentence `goal`. Mark it proposed in `changes` until the user confirms.
+7. Render, check, and show the user the check output plus open questions.
 
-```markdown
-## Conflicts
-- <field>: local `<value>` vs tracker `<value>` (source: <tracker kind>)
+### status ("what is left", "who owns X", "when is X review-ready")
+
+1. Run `check` on the sprint or the program folder.
+2. Answer from its output and sprint.yaml. Do not fetch the tracker unless the user asks for a refresh.
+
+### replan (move, reassign, pull in, drop)
+
+1. Edit sprint.yaml. Pulling in moves the item from `pull_in` to `tickets` with an owner, status, and `ready`. Moving between sprints removes it from one file and adds it to the other.
+2. Add a `changes` line, render, check.
+
+### refresh (only when asked)
+
+1. Read the tracker (Jira through Atlassian MCP). Tracker-owned fields: key, type, status, assignee, sprint id, stored estimate, parent.
+2. Show the differences first. Then update only tracker-owned fields. Local-owned fields stay: order, `ready` dates, capacity, load limit, pull-in ranking, goal.
+3. Each conflict becomes a `changes` line: `YYYY-MM-DD refresh: TCD-1 status local To Do, tracker In Review`.
+4. Never write to the tracker unless the user explicitly asks for that write.
+
+## sprint.yaml
+
+```yaml
+sprint: TCD Sprint 21
+dates: [2026-10-07, 2026-10-20]
+merge_by: 2026-10-16
+jira: 2574                      # optional sprint id
+jira_browse: https://site.atlassian.net/browse/   # optional, builds key links
+goal: One sentence.
+load_limit: 0.8                 # optional, default 0.8
+
+capacity:
+  - {person: Ana, pool: BE, points: 9.5, note: "0.75 of 13"}
+  - {person: FE, pool: FE, points: 13, note: "one FE capacity"}
+
+tickets:                        # committed, review order
+  - key: TCD-1
+    title: "[BE] Short title"
+    story: TCD-0                # optional parent
+    owner: Ana                  # person or pool
+    points: 3
+    status: To Do
+    ready: 2026-10-08           # optional review-ready date
+    blocked_by: [TCD-2]         # optional
+    link: ../path/INDEX.md      # optional local spec; else jira_browse + key
+
+pull_in:                        # ranked, not counted
+  - {key: TCD-3, title: "[BE] Next", story: TCD-0, points: 2, blocked_by: []}
+
+not_counted: ["Done design work, other teams, won't do"]
+open_questions: ["Decisions the user still owes"]
+changes: ["2026-10-05 What changed"]
 ```
 
-When a local-owned choice disagrees with the tracker, keep the local choice, append the same conflict line, and do not overwrite it. Changing a local-owned choice requires the user to authorize that change.
+Quote any free text that contains a comma inside a `{...}` mapping.
 
-## Team schedule
+## What check flags
 
-Generalize from the project's own units. Do not copy another team's names, dates, ids, or formulas. Do not invent capacity.
-
-- **Membership and order** live in `tickets.md` and `schedule.md`. A feature may span sprints. Moving a ticket between sprints does not move or copy its contract.
-- **Carry-over** stays visible. Do not count it in the current sprint's load, and do not include another sprint's tickets in this sprint's totals.
-- **People** (`people.md`): availability, capacity, estimates, and assigned load. Derive figures from configured units, the calendar or availability the user stated, and named assumptions.
-- **Review-ready** is not the sprint end. Record the project's implementation and merge deadlines, and time for QA or acceptance, separately from the sprint end date.
-- **Scenarios**: multi-sprint scope, alternative capacity assumptions, optional scope, and explicit buffers. Show the assumptions and the overload. Do not hide them in one total.
-- **Parent/child**: group with parent keys and blocked-by links. Do not invent nested ticket directories.
-- A sprint accounting label (done for this sprint's load) is not feature merge and does not promote decisions.
-
-## Tracker support
-
-Load mappings from `tracker` in `.ai-native.yml`. Jira is the first supported kind: see [jira.md](jira.md). The profile supplies site, project, issue types, fields, statuses, estimates, owners, sprints, and hierarchy. No ids or people are hardcoded here.
-
-Check `tracker.capabilities` before hierarchy, sprint, estimate, or owner operations. If a capability is missing, say what is unsupported. Do not make another tracker mimic Jira. `kind: markdown` needs no tracker call. Any other kind is an extension point: explain that no adapter is shipped, and keep the local notes as the record.
+Over capacity or over the load limit (per person, and per pool with more than one person). A `ready` after `merge_by`. A ticket ready on or before its blocker. A blocker in a later sprint, or only in some `pull_in`. A ticket in two live sprints, or in both `tickets` and `pull_in`. A stale or missing sprint.md. Schema errors stop with the file, ticket, and field (exit 2). An unknown top-level key, ticket key, or capacity key is a schema error.

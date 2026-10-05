@@ -1,0 +1,10 @@
+sprint: S00
+dates: [2026-10-05, 2026-10-16]
+merge_by: 2026-10-14
+goal: Seed the engineering contract, then uv for catalog Python.
+capacity: []
+tickets: []
+pull_in: []
+open_questions:
+  - Replace these placeholder dates. The old notes had no calendar.
+  - "S00-01 is doing, then S00-02 (blocked by S00-01). No points were recorded. Capacity is solo, no separate sheet."

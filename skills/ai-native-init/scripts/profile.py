@@ -1,7 +1,7 @@
 """Pack membership, profile checks, and adapter region refresh.
 
-`all` is the union of the engineering and planning presets. It is not every
-directory under skills/, and it never includes scrum-master.
+`all` is the union of the engineering and planning presets. It is the
+explicit lists below, not a scan of every directory under skills/.
 """
 
 from __future__ import annotations
@@ -41,9 +41,6 @@ PLANNING = [
     "ai-native-upgrade",
     "ship-ticket",
 ]
-
-# Kept in the repo. Not installed by engineering, planning, or all.
-EXCLUDED_FROM_EVERY_PRESET = ("scrum-master",)
 
 KNOWN_PRESETS = ("engineering", "planning", "all")
 LAYOUTS = {"features", "sprints", "epics", "flat"}
@@ -85,11 +82,11 @@ def _expanded(packs: list[str]) -> list[str]:
 
 
 def skills_for(packs: list[str]) -> list[str]:
-    """Skills to install for this selection. Never scrum-master. Never 'every directory'."""
+    """Skills to install for this selection. Explicit preset lists, not every directory."""
     seen: set[str] = set()
     out: list[str] = []
     for name in _expanded(packs):
-        if name in seen or name in EXCLUDED_FROM_EVERY_PRESET:
+        if name in seen:
             continue
         seen.add(name)
         out.append(name)

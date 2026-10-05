@@ -15,5 +15,7 @@ jobs:
           python-version: "3.12"
       - name: SKILL.md name matches directory
         run: python3 scripts/check-skills.py
+      - name: sprint plan self-check
+        run: pip install pyyaml && python3 scripts/test_sprint_plan.py
       - name: compile init/upgrade
         run: python3 -m py_compile skills/ai-native-init/scripts/init.py skills/ai-native-upgrade/scripts/upgrade.py

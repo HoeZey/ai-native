@@ -2,8 +2,8 @@
 """Print the skills for an engineering, planning, or all preset.
 
 Does not call `npx skills --pack` (that flag is not a real installer option).
-A bare `npx skills add <repo>` installs every directory under skills/, including
-scrum-master. That install is not the `all` preset.
+A bare `npx skills add <repo>` installs every directory under skills/.
+That command is not a preset. Presets are the explicit lists.
 """
 
 from __future__ import annotations
@@ -17,7 +17,6 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "skills" / "ai-native-init" / "scripts"))
 
 from profile import (  # noqa: E402
-    EXCLUDED_FROM_EVERY_PRESET,
     classify_profile,
     normalize_packs,
     skills_for,
@@ -55,10 +54,9 @@ def main() -> None:
         sys.exit("--add and --remove need --target so the selection is saved")
 
     print(
-        "Bare `npx skills add` is not a preset. It would install scrum-master, "
-        "which engineering, planning, and all all exclude."
+        "Bare `npx skills add` is not a preset. It installs every directory under skills/. "
+        "Presets are the explicit lists."
     )
-    print(f"Excluded from every preset: {', '.join(EXCLUDED_FROM_EVERY_PRESET)}.")
     print("This command does not delete skills. User-owned skills stay put.")
 
     if args.target is None:
