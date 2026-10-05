@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/HoeZey/ai-native/compare/v1.0.0...v1.1.0) (2026-10-05)
+
+
+### Features
+
+* plan sprints from sprint.yaml ([c523a13](https://github.com/HoeZey/ai-native/commit/c523a130df619fb0f20a4ccb58b441e84b4ebf45))
+
 ## 1.0.0 (2026-10-04)
 
 
