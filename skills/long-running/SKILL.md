@@ -75,7 +75,8 @@ Before the first Task:
 3. Read repository worktree setup and Cursor worktree limits.
 4. Record protected resources, permissions, and allowed writes.
 5. Create the program branch and worktree without switching the user checkout.
-6. Copy the scoreboard template, list every story, append preflight to log.
+6. Copy the scoreboard template, list every story, set `program_worktree` to
+   that absolute path, and append preflight to the log.
 
 Mismatch stops before launch.
 
@@ -98,9 +99,12 @@ A wave is dependency-ready stories up to manifest concurrency.
    commit rules.
 9. Run integration checks and required isolated user-path smoke before
    unlocking dependants.
+10. Close each story worktree from this wave (Worktree close) once that story
+    is integrated, or once it has stopped and its porcelain status is empty.
 
 After all waves, run a fresh two-axis review over delivery-base...program-head
-against all manifest contracts.
+against all manifest contracts. Keep the program worktree until that review
+finishes. When the run completes, close the program worktree.
 
 After every subagent, continue or show:
 
@@ -111,6 +115,20 @@ next: <specific action>
 ```
 
 Subagent completion alone never ends the coordinator chat.
+
+## Worktree close
+
+A new worktree is cheap. Close it when this run is done with that checkout.
+
+The coordinator does this. Nested agents do not. Remove only a path this run recorded (`program_worktree` or a story row). Leave the branch. Do not `rm -rf` the directory. Do not remove the user checkout.
+
+From the user checkout, not from inside the worktree:
+
+1. If `git -C <path> status --porcelain` prints anything, leave the worktree and name the path.
+2. If it prints nothing, run `git worktree remove --force <path>`.
+3. Set that scoreboard cell, or `program_worktree`, to `removed`. Append an events.log line.
+
+Close a story worktree after that story is integrated, or after it stops with an empty porcelain status. Close the program worktree when the run completes or reaches a terminal stop, after the final review if the run got that far.
 
 ## Nested roles
 
@@ -131,15 +149,17 @@ parent/head SHA, worktree, agent reference, review result, checks,
 fixture-green, user-path-green, next.
 
 Append one ISO-8601 line to events.log for preflight, claims, starts/ends,
-reviews, remediation, gates, integration, smoke, permissions, compaction,
-stops, and completion.
+reviews, remediation, gates, integration, smoke, worktree removal, permissions,
+compaction, stops, and completion.
 
 field-guide.md holds 1–3 line run-specific surprises. Inject it into later
 prompts. It is not a cross-run lessons file.
 
 After compaction or a new run chat, read manifest.md, scoreboard.md, Git,
 field-guide.md, and recent events.log lines. Reconcile active rows and agent
-references before launching. Do not infer state from transcript memory.
+references before launching. Do not infer state from transcript memory. A
+worktree cell or `program_worktree` value of `removed` means that checkout is
+gone. Add a new worktree only if that story or the program still needs one.
 
 ## Gates
 
@@ -150,8 +170,9 @@ references before launching. Do not infer state from transcript memory.
 - Record fixture-green and user-path-green separately. Do not describe
   required skipped user-path work as complete.
 - Smoke uses isolated manifest-approved resources.
-- No undeclared write, push, promotion, process termination, or worktree
-  deletion.
+- No undeclared write, push, promotion, or process termination.
+- Nested agents do not delete worktrees. The coordinator closes a run
+  worktree only through Worktree close.
 - Complete only when every manifest story is accounted for, full checks and
   final program review pass, and user-path state is explicit.
 
@@ -164,9 +185,11 @@ references before launching. Do not infer state from transcript memory.
 - User return — continue unless the user pauses or redirects.
 
 Every terminal stop updates scoreboard, events.log, and summary.txt, then
-names the next human action. summary.txt records elapsed time, event/story/
-review/remediation counts, checks, user-path state, program head, and exact
-stop or next action.
+names the next human action. Close each run worktree whose porcelain status
+is empty, including the program worktree. Leave any path that still has
+uncommitted changes, and name it. summary.txt records elapsed time, event/story/
+review/remediation counts, checks, user-path state, program head, worktrees
+left in place, and exact stop or next action.
 
 ## Hard nos
 
@@ -174,6 +197,7 @@ stop or next action.
 - No read of ~/.cursor/plans/ during BUILD-PROGRAM.
 - No second execution plan. The manifest is the only run contract.
 - No user-checkout switch.
+- No nested-agent worktree deletion. The coordinator closes run worktrees only through Worktree close.
 - No undeclared external or live mutation.
 - No push or promotion unless explicitly authorized. Feature-decision promotion and tracker transitions need that authorization named in the manifest. Program completion is not merge evidence for a feature.
 - No silent stop after subagent completion.

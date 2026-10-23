@@ -1,29 +1,52 @@
 # AI-native
 
-Private catalog of 10x process skills, plus **init/upgrade** for a `context/` (or `docs/`) working-memory layer. Presets are `engineering`, `planning`, and `all`.
+Private catalog of 10x process skills, plus **init/upgrade** for a `context/` (or `docs/`) working-memory layer.
 
-Not on skills.sh. There is no `npx skills --pack` flag. From a clone of this repo, print the install command for a preset:
+## Install
 
-```bash
-python3 scripts/select-pack.py --preset engineering
-python3 scripts/select-pack.py --preset planning
-python3 scripts/select-pack.py --preset all
-```
+Install a pack from the git URL. Add `#vX.Y.Z` to that URL to pin a release (`v1.1.0` is the current tag).
 
-Run the printed `npx skills add ... --skill ...` command. It installs that preset through the existing git distribution.
-
-A bare `npx skills add git@github.com:HoeZey/ai-native.git` installs every directory under `skills/`. That command is not a preset. Presets are the explicit lists from `scripts/select-pack.py`.
-
-Update an install with `npx skills update -g`. To add or remove a pack in a consumer repo without switching the selection to `all`:
+Engineering is the build loop: grill through implement, review, and qa.
 
 ```bash
-python3 scripts/select-pack.py --target <repo> --add planning
-python3 scripts/select-pack.py --target <repo> --remove planning
+npx skills add git@github.com:HoeZey/ai-native.git \
+  --skill 10x-engineer \
+  --skill grill-me \
+  --skill grill-me-with-docs \
+  --skill prototype \
+  --skill research \
+  --skill handoff \
+  --skill write-a-prd \
+  --skill wayfinder \
+  --skill to-issues \
+  --skill implement \
+  --skill tdd \
+  --skill diagnosing-bugs \
+  --skill code-review \
+  --skill qa \
+  --skill long-running \
+  --skill ai-native-init \
+  --skill ai-native-upgrade \
+  --skill ship-ticket
 ```
 
-The script updates `packs` in `.ai-native.yml` and prints skills to install. It does not delete skills. Shared skills that another selected pack still needs stay required. Skills that are not in this catalog are left alone.
+Planning is sprint planning.
 
-Pin a release tag when one exists by adding `#v0.1.0` to the git URL in the printed command.
+```bash
+npx skills add git@github.com:HoeZey/ai-native.git \
+  --skill grill-me \
+  --skill grill-me-with-docs \
+  --skill handoff \
+  --skill write-a-prd \
+  --skill wayfinder \
+  --skill to-issues \
+  --skill sprint-planning \
+  --skill ai-native-init \
+  --skill ai-native-upgrade \
+  --skill ship-ticket
+```
+
+All is engineering plus sprint planning. Use the engineering command and add `--skill sprint-planning`.
 
 In a consumer repo:
 
@@ -36,7 +59,7 @@ That writes INDEX + a feature ticket dir, a thin alwaysApply rule that **names**
 
 `/ai-native-upgrade` refreshes pack-owned protocol files and the generated adapter region from `context/.ai-native.yml` (or `docs/.ai-native.yml`). It keeps project settings, the adapter's project region, and `<slug>-project.mdc`. It does not rewrite ticket trees or INDEX `current`.
 
-`npx skills update -g` refreshes `~/.agents/skills`. A same-named skill under `~/.cursor/skills` or a consumer repo's `.cursor/skills/` shadows that global install, so do not vendor this catalog inside a product repo.
+`npx skills update -g` refreshes `~/.agents/skills`. A same-named skill under `~/.cursor/skills` or a consumer repo's `.cursor/skills/` is the copy that runs.
 
 ## Working memory
 

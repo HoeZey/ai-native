@@ -7,6 +7,17 @@
       "exclude-paths": [
         "context",
         ".cursor/skills"
+      ],
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "skills/ai-native-init/scripts/profile.py"
+        },
+        {
+          "type": "json",
+          "path": "context/.ai-native.yml",
+          "jsonpath": "$.pack"
+        }
       ]
     }
   }

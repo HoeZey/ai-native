@@ -17,7 +17,8 @@ Start every shell command with: cd {absolute_worktree}
 Do not switch or edit the user checkout.
 Do not access protected resources except for an allowed exact action.
 Do not push, promote, delete worktrees, kill processes, publish, or perform
-external writes except for an allowed exact action.
+external writes except for an allowed exact action. Do not delete this
+worktree. The coordinator removes it after the story is finished.
 ```
 
 ## Implementer

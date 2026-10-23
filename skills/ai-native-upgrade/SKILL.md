@@ -18,11 +18,11 @@ Protocol files only. Instance data stays put.
 2. Run:
 
 ```bash
-python3 scripts/upgrade.py --target <repo-root>
+uv run scripts/upgrade.py --target <repo-root>
 ```
 
 This skill's `scripts/upgrade.py` calls the sibling `ai-native-init` templates. Both skills must be installed from the same catalog.
 
 3. Show stdout. The script refreshes pack-owned protocol and the generated adapter region. It keeps `.ai-native.yml` keys (including ones it does not recognize), the adapter's project region, and `<slug>-project.mdc`. An incompatible value is written to `{root}/upgrade-review.md` and the profile is left as it was.
 4. Do not rewrite ticket trees, `board.md` cards, or INDEX `current` / `phase` / `ticket`.
-5. Stop. Catalog version itself is `npx skills update -g`, via `scripts/select-pack.py` so the saved packs are what get installed. A bare `npx skills add` is not a preset. Global installs live in `~/.agents/skills`.
+5. Stop. Refresh an existing global install with `npx skills update -g`. Global installs live in `~/.agents/skills/<skill-name>`.

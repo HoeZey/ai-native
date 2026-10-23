@@ -9,6 +9,7 @@ on: {story id, gate, or none}
 next: {specific action}
 program_branch: {branch}
 program_head: {full sha}
+program_worktree: {absolute path, or removed}
 manifest_sha256: {hash}
 delivery_base: {branch}@{full sha}
 started: {ISO-8601}
