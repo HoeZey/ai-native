@@ -4,17 +4,49 @@ Private catalog of 10x process skills, plus **init/upgrade** for a `context/` (o
 
 ## Install
 
-```bash
-npx skills add git@github.com:HoeZey/ai-native.git -g
-```
+Install a pack from the git URL. Add `#vX.Y.Z` to that URL to pin a release (`v1.1.0` is the current tag).
 
-That installs into `~/.agents/skills/<skill-name>` and asks which skills to include. `-g -y` installs the whole catalog with no prompts. Add `#vX.Y.Z` to the git URL to pin a release (`v1.1.0` is the current tag).
-
-One skill:
+Engineering is the build loop: grill through implement, review, and qa.
 
 ```bash
-npx skills add git@github.com:HoeZey/ai-native.git --skill implement -g -y
+npx skills add git@github.com:HoeZey/ai-native.git \
+  --skill 10x-engineer \
+  --skill grill-me \
+  --skill grill-me-with-docs \
+  --skill prototype \
+  --skill research \
+  --skill handoff \
+  --skill write-a-prd \
+  --skill wayfinder \
+  --skill to-issues \
+  --skill implement \
+  --skill tdd \
+  --skill diagnosing-bugs \
+  --skill code-review \
+  --skill qa \
+  --skill long-running \
+  --skill ai-native-init \
+  --skill ai-native-upgrade \
+  --skill ship-ticket
 ```
+
+Planning is sprint planning.
+
+```bash
+npx skills add git@github.com:HoeZey/ai-native.git \
+  --skill grill-me \
+  --skill grill-me-with-docs \
+  --skill handoff \
+  --skill write-a-prd \
+  --skill wayfinder \
+  --skill to-issues \
+  --skill sprint-planning \
+  --skill ai-native-init \
+  --skill ai-native-upgrade \
+  --skill ship-ticket
+```
+
+All is engineering plus sprint planning. Use the engineering command and add `--skill sprint-planning`.
 
 In a consumer repo:
 

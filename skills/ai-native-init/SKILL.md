@@ -14,7 +14,7 @@ Seed working memory into the **current git repo**. Do not copy Quota or Jarvis d
 
 ## Preconditions
 
-- `/10x-engineer` is installed (this catalog). If missing, run `npx skills add git@github.com:HoeZey/ai-native.git -g` and select the skills. `-g -y` installs the whole catalog.
+- `/10x-engineer` is installed (this catalog). If missing, run the engineering `npx skills add` command from the catalog README.
 - Cwd is a git repo. Stop if not.
 
 ## Parameters (inspect first)
