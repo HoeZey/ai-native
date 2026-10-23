@@ -4,7 +4,13 @@ Private catalog of 10x process skills, plus **init/upgrade** for a `context/` (o
 
 ## Install
 
-Install a pack from the git URL. Add `#vX.Y.Z` to that URL to pin a release (`v1.1.0` is the current tag).
+```bash
+npx skills add git@github.com:HoeZey/ai-native.git --skill '*'
+```
+
+Add `#vX.Y.Z` to the git URL to pin a release.
+
+If you want specifically engineering or sprint planning, use one of these.
 
 Engineering is the build loop: grill through implement, review, and qa.
 
@@ -30,7 +36,7 @@ npx skills add git@github.com:HoeZey/ai-native.git \
   --skill ship-ticket
 ```
 
-Planning is sprint planning.
+Sprint planning:
 
 ```bash
 npx skills add git@github.com:HoeZey/ai-native.git \
@@ -45,8 +51,6 @@ npx skills add git@github.com:HoeZey/ai-native.git \
   --skill ai-native-upgrade \
   --skill ship-ticket
 ```
-
-All is engineering plus sprint planning. Use the engineering command and add `--skill sprint-planning`.
 
 In a consumer repo:
 
