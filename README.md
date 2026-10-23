@@ -1,29 +1,33 @@
 # AI-native
 
-Private catalog of 10x process skills, plus **init/upgrade** for a `context/` (or `docs/`) working-memory layer. Presets are `engineering`, `planning`, and `all`.
+Private catalog of 10x process skills, plus **init/upgrade** for a `context/` (or `docs/`) working-memory layer.
 
-Not on skills.sh. There is no `npx skills --pack` flag. From a clone of this repo, print the install command for a preset:
+## Install
+
+Not on skills.sh. There is no `npx skills --pack` flag. From a clone of this repo:
 
 ```bash
-python3 scripts/select-pack.py --preset engineering
-python3 scripts/select-pack.py --preset planning
-python3 scripts/select-pack.py --preset all
+uv run scripts/select-pack.py --preset <engineering|planning|all>
 ```
 
-Run the printed `npx skills add ... --skill ...` command. It installs that preset through the existing git distribution.
+Run the printed `npx skills add ... --skill ...` command. The preset is the only choice:
 
-A bare `npx skills add git@github.com:HoeZey/ai-native.git` installs every directory under `skills/`. That command is not a preset. Presets are the explicit lists from `scripts/select-pack.py`.
+- `engineering` — build loop (grill through implement, review, and qa). Does not seed sprint planning.
+- `planning` — sprint planning. Does not install the build loop.
+- `all` — both.
 
-Update an install with `npx skills update -g`. To add or remove a pack in a consumer repo without switching the selection to `all`:
+A bare `npx skills add git@github.com:HoeZey/ai-native.git` installs every directory under `skills/`. That command is not a preset.
+
+Update an install with `npx skills update -g`. Add or remove one preset in a consumer repo:
 
 ```bash
-python3 scripts/select-pack.py --target <repo> --add planning
-python3 scripts/select-pack.py --target <repo> --remove planning
+uv run scripts/select-pack.py --target <repo> --add <engineering|planning>
+uv run scripts/select-pack.py --target <repo> --remove <engineering|planning>
 ```
 
 The script updates `packs` in `.ai-native.yml` and prints skills to install. It does not delete skills. Shared skills that another selected pack still needs stay required. Skills that are not in this catalog are left alone.
 
-Pin a release tag when one exists by adding `#v0.1.0` to the git URL in the printed command.
+Pin a GitHub release by adding `#vX.Y.Z` to the git URL in the printed command.
 
 In a consumer repo:
 

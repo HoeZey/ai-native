@@ -14,7 +14,7 @@ Seed working memory into the **current git repo**. Do not copy Quota or Jarvis d
 
 ## Preconditions
 
-- `/10x-engineer` is installed (this catalog). If missing, from a catalog clone run `python3 scripts/select-pack.py --preset engineering` and use the printed command. A bare `npx skills add` is not a preset.
+- `/10x-engineer` is installed (this catalog). If missing, from a catalog clone run `uv run scripts/select-pack.py --preset <engineering|planning|all>` and use the printed command. A bare `npx skills add` is not a preset.
 - Cwd is a git repo. Stop if not.
 
 ## Parameters (inspect first)
@@ -41,7 +41,7 @@ Read an existing `{root}/.ai-native.yml`, adapter, and `.cursor/rules/<slug>-pro
 2. Run from this skill directory:
 
 ```bash
-python3 scripts/init.py --target <repo-root> --slug <slug> [flags]
+uv run scripts/init.py --target <repo-root> --slug <slug> [flags]
 ```
 
 `scripts/init.py` lives next to this `SKILL.md` after `npx skills add` (`~/.agents/skills/ai-native-init/scripts/init.py`). If you are in the catalog clone, same relative path.
