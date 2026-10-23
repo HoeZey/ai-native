@@ -8,7 +8,7 @@ description: >-
 
 # TDD
 
-The test **loop**, not the session orchestrator. `implement` owns one ticket, worktrees, typecheck, and close-out. This skill owns red → green → refactor.
+The test **loop**, not the session orchestrator. `implement` owns one ticket, worktrees (and removes them before the session ends), typecheck, and close-out. This skill owns red → green → refactor.
 
 **Not Matt's current `tdd`.** His later skill is red → green only; refactor moved to `code-review`. This fork keeps **Beck**: refactor **while green**, toward deep modules. `code-review` is a two-axis check (standards vs spec), not a substitute for that refactor step.
 

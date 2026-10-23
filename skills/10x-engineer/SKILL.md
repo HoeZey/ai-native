@@ -59,10 +59,17 @@ implement, or long-running to plan.
 - **PRD is a contract.** Not in the PRD = not in scope.
 - **Board is a graph.** Parallel-eligible = no blockers (file overlap is fine).
 - **implement trusts the board.** One ticket, own worktree if parallel, commit
-  when green. PR only if asked. After a full board: one ticket with you in
+  when green, then remove that worktree before the session ends. Leave the
+  branch. PR only if asked. After a full board: one ticket with you in
   the loop → /implement KEY. Many tickets unattended → /long-running plan,
   then save .runs/<id>/manifest.md and start a fresh
-  /long-running run <manifest-path>.
+  /long-running run <manifest-path>. The coordinator removes each story
+  worktree when that story is done, and the program worktree when the run
+  ends. Nested agents do not delete worktrees.
+- **code-review opens its own worktree.** Detached checkout of the reviewed
+  commit. Do not switch the user checkout. Remove that worktree before the
+  session ends. Nested reviewers use the coordinator's worktree and do not
+  remove it.
 - **Nested Task is allowed inside BUILD-PROGRAM only.** A fresh subagent is the fresh session for implement and code-review. Do not paste "open a new chat" at the user.
 - **Mode boundary is mandatory.** PROGRAM-PLAN runs in Plan mode and stops for
   approval. BUILD-PROGRAM runs in Agent mode after approval.
