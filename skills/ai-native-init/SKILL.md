@@ -14,7 +14,7 @@ Seed working memory into the **current git repo**. Do not copy Quota or Jarvis d
 
 ## Preconditions
 
-- `/10x-engineer` is installed (this catalog). If missing, from a catalog clone run `uv run scripts/select-pack.py --preset <engineering|planning|all>` and use the printed command. A bare `npx skills add` is not a preset.
+- `/10x-engineer` is installed (this catalog). If missing, run `npx skills add git@github.com:HoeZey/ai-native.git -g` and select the skills. `-g -y` installs the whole catalog.
 - Cwd is a git repo. Stop if not.
 
 ## Parameters (inspect first)
