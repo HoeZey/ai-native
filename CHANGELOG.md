@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/HoeZey/ai-native/compare/v1.1.0...v1.2.0) (2026-10-23)
+
+
+### Features
+
+* close worktrees when implement, review, and long-running finish ([e8893f8](https://github.com/HoeZey/ai-native/commit/e8893f80d2f1bf9c41e70f52dcdb35a07887d4e0))
+
+
+### Bug Fixes
+
+* write the released catalog version into .ai-native.yml ([a1e54b0](https://github.com/HoeZey/ai-native/commit/a1e54b0bdc2b48d9744b1bceb46eb725dc8dfa1b))
+
 ## [1.1.0](https://github.com/HoeZey/ai-native/compare/v1.0.0...v1.1.0) (2026-10-05)
 
 
