@@ -41,6 +41,13 @@ def read_json(path: Path) -> dict:
     return json.loads(path.read_text())
 
 
+def test_pack_version_matches_release() -> None:
+    manifest = json.loads((ROOT / ".release-please-manifest.json").read_text())
+    dogfood = read_json(ROOT / "context" / ".ai-native.yml")
+    assert profile.PACK_VERSION == manifest["."]
+    assert dogfood["pack"] == profile.PACK_VERSION
+
+
 def test_membership() -> None:
     for packs in (["engineering"], ["planning"], ["all"], ["engineering", "planning"]):
         skills = profile.skills_for(packs)
@@ -78,6 +85,7 @@ def test_engineering_and_planning_init(tmp: Path) -> None:
     assert not (eng / "context" / "sprint-planning").exists()
     assert (eng / "context" / "features" / "seed" / "tickets" / "S00-01" / "INDEX.md").is_file()
     pack = read_json(eng / "context" / ".ai-native.yml")
+    assert pack["pack"] == profile.PACK_VERSION
     assert pack["packs"] == ["engineering"]
     assert pack["decision_policy"] == "preliminary_until_feature_merge"
     assert "notes_from_the_future" not in pack
@@ -122,6 +130,7 @@ def test_upgrade_roundtrip(tmp: Path) -> None:
     root = repo / "context"
     pack_path = root / ".ai-native.yml"
     pack = read_json(pack_path)
+    pack["pack"] = "0.1.0"
     pack["decision_policy"] = "locked_on_record"
     pack["quota_note"] = "keep-me"
     pack["tracker"] = {"kind": "markdown", "capabilities": []}
@@ -146,6 +155,7 @@ def test_upgrade_roundtrip(tmp: Path) -> None:
     result = run([sys.executable, str(UPGRADE), "--target", str(repo)])
     assert result.returncode == 0, result.stdout + result.stderr
     saved = read_json(pack_path)
+    assert saved["pack"] == profile.PACK_VERSION
     assert saved["decision_policy"] == "locked_on_record"
     assert saved["quota_note"] == "keep-me"
     assert saved["tracker"]["kind"] == "markdown"
@@ -215,6 +225,7 @@ def test_pack_switch(tmp: Path) -> None:
 
 
 def main() -> None:
+    test_pack_version_matches_release()
     test_membership()
     test_select_command()
     tmp = ROOT / ".tmp-consumer-tests"
