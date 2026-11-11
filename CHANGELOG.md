@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.0.0](https://github.com/HoeZey/ai-native/compare/v1.2.0...v2.0.0) (2026-11-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* /long-running is now /multi-agent-implement plan|run. Remove the old long-running install.
+
+### Features
+
+* rename long-running to multi-agent-implement and make it the default build step ([3884f50](https://github.com/HoeZey/ai-native/commit/3884f504ddd4ad4511bc22dabb3c433f9781a12c))
+
+
+### Bug Fixes
+
+* let release-please bump the pack version in profile.py and .ai-native.yml ([98cdb73](https://github.com/HoeZey/ai-native/commit/98cdb730b857100dd311c67fc0c30675d7c5ac32))
+
 ## [1.2.0](https://github.com/HoeZey/ai-native/compare/v1.1.0...v1.2.0) (2026-10-23)
 
 
