@@ -29,7 +29,7 @@ Read `context/.ai-native.yml` for `packs`, `board`, `default_branch`, `decision_
 - **grill-me-with-docs** — read root `CONTEXT.md`. Pack default: new decisions are preliminary, not accepted history. If `decision_policy` is `locked_on_record`, honor that store and do not relocate it.
 - **wayfinder** — one destination, one map. Markdown maps live under `context/planning/maps/` when present. A Jira epic only when `tracker.kind` is `jira` and the user asks to publish.
 - **to-issues** — quiz, then write the ticket dir for this `layout` (`features/<feature>/tickets/<ID>/` or `planning/tickets/<ID>/`) with `## current` / `## ac` and a thin card when the board is markdown. Parent/child grouping is links, not nested directories. `plan.md` is the plan chat, not this skill. Tracker writes only when the user asks.
-- **implement** — Story is `context/INDEX.md`'s `ticket` → that dir's INDEX.md + plan.md. Execute the plan; set `in_review`, not `done`. After merge to `main`, `ship-ticket` if `board` is markdown. Do not promote feature decisions from a ticket close.
+- **multi-agent-implement / implement** — Story is `context/INDEX.md`'s `ticket` → that dir's INDEX.md + plan.md. Execute the plan; set `in_review`, not `done`. After merge to `main`, `ship-ticket` if `board` is markdown. Do not promote feature decisions from a ticket close.
 - **code-review** — spec source is INDEX.md + plan.md. Report only.
 - **qa** — missing feature or bug → that layout's ticket dir, plus a board card when the board is markdown.
 

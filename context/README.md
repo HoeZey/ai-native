@@ -47,7 +47,7 @@ planning/tickets/<KEY>/plan.md     implementer SoT — how, inlined decisions, t
 
 Sprint or epic `decisions.md` is the working log for that folder. Look up an `id` cited in `plan.md`. Do not require a full read at implement time.
 
-`plan.md` is required before `/implement` on a code slice. Parked / not-yet-grilled tickets may be INDEX only. If `plan.md` is silent on a choice, **stop and ask**. Do not guess.
+`plan.md` is required before `/multi-agent-implement` or `/implement` on a code slice. Parked / not-yet-grilled tickets may be INDEX only. If `plan.md` is silent on a choice, **stop and ask**. Do not guess.
 
 INDEX keys: `seams` (public surface), `tests` (existing test files), `create` (new files — dir or purpose, not a filename). Extra key for this repo: `none` (`scenes` = packed scenes dir+purpose; `alembic` = dir+head, not a revision filename; `none` = omit).
 
@@ -75,9 +75,9 @@ Implement **must not** set `done`. After a slice: `in_review`. Then `/code-revie
 
 ## Sessions
 
-1. **Plan** — INDEX.md + `plan.md`. No product code. Do not spawn `/implement` from this chat.
-2. **Implement** — `/implement <KEY>` in a new chat. Execute the plan. Set `in_review`.
-3. **Review** — `/code-review` after a commit. Report only. Do not patch.
+1. **Plan** — INDEX.md + `plan.md`. No product code. Do not spawn `/multi-agent-implement` or `/implement` from this chat.
+2. **Implement** — `/multi-agent-implement <KEY>` in a new chat. Nested implement and two-axis review loop until green. Set `in_review`. Hands-on fallback: `/implement <KEY>`.
+3. **Review** — after hands-on `/implement`, `/code-review` after a commit. Report only. Do not patch. `/multi-agent-implement` already ran fresh reviewers.
 
 ## Human reading order
 
