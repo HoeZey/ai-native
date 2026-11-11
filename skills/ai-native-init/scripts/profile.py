@@ -6,7 +6,7 @@ explicit lists below, not a scan of every directory under skills/.
 
 from __future__ import annotations
 
-PACK_VERSION = "1.2.0"  # x-release-please-version
+PACK_VERSION = "2.0.0"  # x-release-please-version
 
 ENGINEERING = [
     "10x-engineer",
