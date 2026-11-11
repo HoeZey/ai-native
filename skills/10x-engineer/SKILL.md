@@ -2,7 +2,8 @@
 name: 10x-engineer
 description: >-
   Route a non-trivial idea through planning then execution: grill or wayfinder
-  → PRD → Jira board → implement (tdd) ⇄ qa; hard bugs → diagnosing-bugs.
+  → PRD → Jira board → multi-agent-implement (implement, tdd, review) ⇄ qa;
+  hard bugs → diagnosing-bugs.
   One skill per phase. Use when the user says "10x engineer" or "ai-native workflow".
 ---
 
@@ -22,15 +23,17 @@ too big for one session? ─ yes → wayfinder (decision map)
                                       ↓
                                   to-issues      (vertical tickets)
                                       ↓
-                    one Story ── implement ── code-review (fresh chat)
-                    many Stories unattended ── long-running plan
+                    one Story ── multi-agent-implement KEY
+                                   (nested implement / review / fix until green)
+                    many Stories ── multi-agent-implement plan
                                                     ↓ approve
-                                               long-running run
-                                                    (nested implement / review / integrate)
+                                               multi-agent-implement run
+                                                    (waves of nested implement / review / integrate)
+                    hands-on fallback ── implement ── code-review (fresh chat)
 ```
 
-Do not start implement or long-running until the board exists. Do not use tdd,
-implement, or long-running to plan.
+Do not start multi-agent-implement or implement until the board exists. Do
+not use tdd, implement, or multi-agent-implement to plan.
 
 | Phase | Skill | What it does |
 |---|---|---|
@@ -42,10 +45,11 @@ implement, or long-running to plan.
 | — · CROSS-CUTTING | handoff | Package decisions when context will reset. |
 | 04 · PRD | write-a-prd | Short contract, seams included. |
 | 05 · BOARD | to-issues | Vertical tickets on the project's board; quiz; then publish. |
-| 05b · PROGRAM-PLAN | long-running plan | Switch to Plan mode. After a multi-story board: fill Cursor's plan artifact from the manifest template and stop for approval. Same PRD/issue contract; no second ticket format. |
-| 06 · BUILD | implement | One Story; no redesign; drives tdd. |
+| 05b · PROGRAM-PLAN | multi-agent-implement plan | Switch to Plan mode. After a multi-story board: fill the manifest template, write .runs/<id>/manifest.md, and stop for approval. Same PRD/issue contract; no second ticket format. |
+| 06 · BUILD | multi-agent-implement KEY | Default. One Story; nested implementer and fresh two-axis reviewers loop until green; fix forward, stop only for human-only decisions. |
+| 06 · BUILD (hands-on) | implement | Fallback when you want to be in the loop, or no subagents. One Story; no redesign; drives tdd. Also the nested implementer role. |
 | 06 · BUILD (loop) | tdd | Red / green / **refactor while green** (Beck; collapse overlapping tests in that refactor). |
-| 06b · BUILD-PROGRAM | long-running run | After approval, save the manifest at .runs/<id>/manifest.md. Fresh Agent chat runs /long-running run with that path. Nested implement, review, remediation, integrate. |
+| 06b · BUILD-PROGRAM | multi-agent-implement run | After approval, a fresh Agent chat runs /multi-agent-implement run <manifest-path>. Waves of the same loop, then integrate. |
 | 07 · QA | qa | User-reported problems → durable issues. Obvious bugs → implement. |
 | 07 · DIAGNOSE | diagnosing-bugs | Hard bugs: red loop first, then cause, then tdd regression. |
 | 08 · REVIEW | code-review | Standards vs Spec, fresh session, after a commit. Report only; do not implement. |
@@ -58,26 +62,27 @@ implement, or long-running to plan.
 - **Skip research/prototype** on well-trodden ground; don't skip new SDKs / regulated / unfamiliar code.
 - **PRD is a contract.** Not in the PRD = not in scope.
 - **Board is a graph.** Parallel-eligible = no blockers (file overlap is fine).
-- **implement trusts the board.** One ticket, own worktree if parallel, commit
-  when green, then remove that worktree before the session ends. Leave the
-  branch. PR only if asked. After a full board: one ticket with you in
-  the loop → /implement KEY. Many tickets unattended → /long-running plan,
-  then save .runs/<id>/manifest.md and start a fresh
-  /long-running run <manifest-path>. The coordinator removes each story
-  worktree when that story is done, and the program worktree when the run
-  ends. Nested agents do not delete worktrees.
+- **Build trusts the board.** After a full board: one ticket →
+  /multi-agent-implement KEY. Many tickets → /multi-agent-implement plan,
+  then a fresh /multi-agent-implement run <manifest-path>. Hands-on, or no
+  subagents → /implement KEY, then /code-review in a fresh chat. Each Story
+  gets its own worktree; commit when green; leave the branch; PR only if
+  asked. The coordinator removes each story worktree when that story is
+  done, and the program worktree when the run ends. Nested agents do not
+  delete worktrees. Solo implement removes its own worktree before the
+  session ends.
 - **code-review opens its own worktree.** Detached checkout of the reviewed
   commit. Do not switch the user checkout. Remove that worktree before the
   session ends. Nested reviewers use the coordinator's worktree and do not
   remove it.
-- **Nested Task is allowed inside BUILD-PROGRAM only.** A fresh subagent is the fresh session for implement and code-review. Do not paste "open a new chat" at the user.
+- **Nested Task is allowed inside multi-agent-implement only.** A fresh subagent is the fresh session for implement and code-review. Do not paste "open a new chat" at the user.
 - **Mode boundary is mandatory.** PROGRAM-PLAN runs in Plan mode and stops for
-  approval. BUILD-PROGRAM runs in Agent mode after approval.
+  approval. BUILD-PROGRAM and ticket mode run in Agent mode.
 - **qa files; diagnosing-bugs hunts.** Obvious bug → ticket then implement. No
   red loop yet / intermittent / "debug this" → diagnosing-bugs. Neither is
   planning.
 - **tdd here is Beck** (refactor in the loop). Current Matt tdd is red-green only.
-- **Phase done → Phase exit paste.** Last message is a fenced prompt for the next chat. The agent cannot open a new IDE chat. Nested Task is the same conversation — do not start the next phase that way. BUILD-PROGRAM is the exception: nested implement / review / integrate are roles inside that one phase.
+- **Phase done → Phase exit paste.** Last message is a fenced prompt for the next chat. The agent cannot open a new IDE chat. Nested Task is the same conversation — do not start the next phase that way. multi-agent-implement is the exception: nested implement / review / integrate are roles inside that one phase.
 
 ## Phase exit
 
@@ -100,13 +105,14 @@ If there is no next phase (grill still open, map still foggy, user said stop), o
 | grill-me (shared understanding) | /write-a-prd |
 | wayfinder map clear | /write-a-prd |
 | PRD signed | /to-issues |
-| board or ticket spec+plan ready | /implement <KEY> |
-| board ready, many stories, unattended | /long-running plan |
-| long-running plan approved | /long-running run <manifest-path> |
+| board or ticket spec+plan ready | /multi-agent-implement <KEY> |
+| board ready, many stories | /multi-agent-implement plan |
+| multi-agent-implement plan approved | /multi-agent-implement run <manifest-path> |
+| multi-agent-implement ticket green | (no paste; open a PR or merge, then /ship-ticket <KEY> when board is markdown) |
 | implement committed (solo) | /code-review |
-| implement committed (BUILD-PROGRAM) | (no paste; coordinator continues) |
-| review has findings | /implement <KEY> (read plan.md code-review section) |
-| qa filed a ticket | /implement <KEY> |
+| implement committed (nested) | (no paste; coordinator continues) |
+| review has findings | /multi-agent-implement <KEY> (read plan.md code-review section) |
+| qa filed a ticket | /multi-agent-implement <KEY> |
 
 ## Worth adopting once
 

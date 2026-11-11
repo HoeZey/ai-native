@@ -23,7 +23,7 @@ ENGINEERING = [
     "diagnosing-bugs",
     "code-review",
     "qa",
-    "long-running",
+    "multi-agent-implement",
     "ai-native-init",
     "ai-native-upgrade",
     "ship-ticket",

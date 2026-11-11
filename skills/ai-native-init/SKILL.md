@@ -48,11 +48,11 @@ uv run scripts/init.py --target <repo-root> --slug <slug> [flags]
 
 3. Show the script stdout. Do not hand-edit seeded protocol files in the same turn unless the script failed.
 4. If graft is on PATH: `graft build` in the target repo.
-5. Stop. Next is `/implement S00-01` in a **new** chat, or the human reviews the tree.
+5. Stop. Next is `/multi-agent-implement S00-01` in a **new** chat, or the human reviews the tree.
 
 ## Do not
 
 - Invent `.tscn` filenames or alembic revision ids
 - Copy `epics/` into the alwaysApply rule
-- Spawn `/implement` as a Task from this chat
+- Spawn `/multi-agent-implement` or `/implement` as a Task from this chat
 - Overwrite an existing INDEX `current` (script skips INDEX if present unless `--force`)

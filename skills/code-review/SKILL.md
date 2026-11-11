@@ -28,7 +28,7 @@ Point both axis subagents at that path. They do not add or remove worktrees.
 
 Before this session ends, remove that worktree. Leave the branch. Do not `rm -rf` the directory. From the user checkout, not from inside the worktree: if `git -C <path> status --porcelain` prints anything, leave that path and name it. If it prints nothing, run `git worktree remove --force <path>`. Do not remove a worktree this session did not create. Do not remove the user checkout.
 
-Nested under BUILD-PROGRAM, do not add or remove a worktree. Use the coordinator's checkout.
+Nested under multi-agent-implement, do not add or remove a worktree. Use the coordinator's checkout.
 
 ## Axes
 
@@ -65,7 +65,7 @@ Nested under BUILD-PROGRAM, do not add or remove a worktree. Use the coordinator
    - Spec: provide the product contract and restrict it to the Spec axis above.
      Exclude code-quality review.
 4. Report under the headings Standards and Spec. One-line count per axis. Do not pick a winner across axes.
-5. Do not implement. Report findings only. Do not write product code, tests, or "while we're here" patches in this chat — even when the author agrees with a finding. Follow-up is a new /implement chat (or the human). Agreeing is not a request to patch here. If the user asks to fix a finding in this chat, refuse product code. Point at a new /implement chat. Ticket/context edits are OK when asked.
+5. Do not implement. Report findings only. Do not write product code, tests, or "while we're here" patches in this chat — even when the author agrees with a finding. Follow-up is a new /multi-agent-implement chat (or the human). Agreeing is not a request to patch here. If the user asks to fix a finding in this chat, refuse product code. Point at a new /multi-agent-implement chat. Ticket/context edits are OK when asked.
 6. Remove the worktree this session created (Checkout), then end the session.
 
 Format explanation, recommendation, and the chat report:
@@ -75,9 +75,9 @@ raw HTML. Title stays a short plain sentence.
 
 A change can pass Standards and fail Spec (wrong thing, clean code) or the reverse. That split is the point.
 
-## Nested under BUILD-PROGRAM
+## Nested under multi-agent-implement
 
-When the parent is a long-running coordinator:
+When the parent is a multi-agent-implement coordinator (ticket or program mode):
 
 - Do not add a worktree. Do not remove one. The coordinator owns that checkout.
 - The coordinator is the review lead. It launches Standards and Spec

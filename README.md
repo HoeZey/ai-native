@@ -30,7 +30,7 @@ npx skills add git@github.com:HoeZey/ai-native.git \
   --skill diagnosing-bugs \
   --skill code-review \
   --skill qa \
-  --skill long-running \
+  --skill multi-agent-implement \
   --skill ai-native-init \
   --skill ai-native-upgrade \
   --skill ship-ticket
@@ -62,6 +62,8 @@ In a consumer repo:
 That writes INDEX + a feature ticket dir, a thin alwaysApply rule that **names** `/10x-engineer` then `/10x-<slug>`, graft MCP, `.cursorignore`. It does not copy this catalog into the project. Default layout is `features`. Default `--packs engineering` does not seed `sprint-planning/`. Pass `--packs planning` or `--packs all` when the schedule should be seeded. Pass `--layout sprints` for the older shape. `sprints`, `epics`, and `flat` stay available.
 
 `/ai-native-upgrade` refreshes pack-owned protocol files and the generated adapter region from `context/.ai-native.yml` (or `docs/.ai-native.yml`). It keeps project settings, the adapter's project region, and `<slug>-project.mdc`. It does not rewrite ticket trees or INDEX `current`.
+
+`long-running` is now `multi-agent-implement`, and it is the default build step. If you installed `long-running`, run `npx skills remove long-running` after updating.
 
 `npx skills update -g` refreshes `~/.agents/skills`. A same-named skill under `~/.cursor/skills` or a consumer repo's `.cursor/skills/` is the copy that runs.
 

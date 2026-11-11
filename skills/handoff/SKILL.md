@@ -48,7 +48,7 @@ Prevent LLM context rot. Decisions, not code. Link, don't duplicate. Cross-cutti
 - <term> — <definition>
 
 ## Next skill
-`write-a-prd` | `wayfinder` | `grill-me` | `implement` | other
+`write-a-prd` | `wayfinder` | `grill-me` | `multi-agent-implement` | `implement` | other
 
 ## Watch out
 - <gotcha future-you would forget>

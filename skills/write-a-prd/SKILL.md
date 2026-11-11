@@ -31,7 +31,7 @@ A cleared wayfinder map is **not** a spec. Collapse linked decisions into this d
 4. Draft from artifacts; don't rephrase crisp decisions. Implementation notes name **modules / interfaces / contracts**, never file paths.
 5. Flag contradictions; resolve before shipping.
 6. Show the diff. Both parties sign.
-7. Hand off to `to-issues`, then `implement`. Do not start coding here.
+7. Hand off to `to-issues`, then `multi-agent-implement`. Do not start coding here.
 
 Default output path: `docs/prds/<feature-slug>.md` (adjust to project convention).
 

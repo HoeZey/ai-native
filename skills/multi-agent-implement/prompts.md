@@ -1,8 +1,8 @@
 # Prompt contracts
 
-Fill slots from manifest, scoreboard, and field-guide.md. For every launch,
-prepend the shared guardrails block to one role block. The resulting prompt,
-not either block alone, is the contract.
+Fill slots from the ticket or manifest, scoreboard, and field-guide.md. For
+every launch, prepend the shared guardrails block to one role block. The
+resulting prompt, not either block alone, is the contract.
 
 ## Shared guardrails
 
@@ -18,7 +18,7 @@ Do not switch or edit the user checkout.
 Do not access protected resources except for an allowed exact action.
 Do not push, promote, delete worktrees, kill processes, publish, or perform
 external writes except for an allowed exact action. Do not delete this
-worktree. The coordinator removes it after the story is finished.
+worktree. The multi-agent coordinator removes it when the work is finished.
 ```
 
 ## Implementer
@@ -29,8 +29,8 @@ Do not redesign, grill, or start review. Do not tell the user to open another
 chat.
 
 Branch: {story_branch}
-Base: {immutable_wave_parent_sha}
-Program branch (do not checkout): {program_branch}
+Base: {base_sha}
+Program branch (do not checkout): {program_branch_or_none}
 Issue: {issue_reference}
 PRD: {prd_reference}
 In scope: {in_scope}
@@ -57,10 +57,14 @@ requirements. Do not spawn agents, implement, or publish.
 Three-dot diff: {parent_sha}...{head_sha}
 Branch: {story_or_program_branch}
 Repository guidance: {rule_paths}
+Frozen scope: {frozen_contract}
 
 Return under 400 words:
 - major / minor / nit counts
-- each finding with severity, blocking yes/no, title, path, explanation
+- each finding with severity, blocking yes/no, in-scope yes/no, title, path,
+  explanation
+- keep a finding's path and title identical if it is still present on a
+  later round
 - explicit zero counts when none
 ```
 
@@ -80,30 +84,38 @@ tests bypass the real factory or handler.
 
 Return under 400 words:
 - missing / partial / scope-creep / incorrect counts
-- each finding with classification, blocking yes/no, quoted spec, path
+- each finding with classification, blocking yes/no, in-scope yes/no, title,
+  quoted spec, path
+- keep a finding's path and title identical if it is still present on a
+  later round
 - explicit zero counts when none
 ```
 
 ## Remediation
 
 ```text
-You are remediating ONE story after a blocking review. Follow implement then
-tdd. Do not redesign or start another review. Fix only these findings:
+You are remediating ONE Story after triage. Follow implement then tdd. Do not
+redesign or start another review. Fix all of these items:
 
-{blocking_findings}
+{fixable_items}
 
 Branch: {story_branch}
 Base: {parent_sha}
-Current head: {first_review_head_sha}
+Current head: {current_head_sha}
 Issue/PRD references: {contract_references}
 Frozen contract: {frozen_contract}
 Focused checks: {focused_commands}
 
+Add a regression test for each behavior fix. A failing check counts even when
+it already failed on the base. If a fix would change the frozen contract or
+needs an undeclared write, do not fix that item. Return it as
+needs-human: <reason>.
+
 Commit on the story branch. Return:
 - new full head SHA
-- findings addressed
+- items fixed
 - checks and results
-- anything not fixed and why
+- needs-human items with reasons, or none
 ```
 
 ## Wave integrator
@@ -125,14 +137,46 @@ Squash each accepted story onto the program branch using repository commit
 rules. Reconcile overlap only inside frozen contracts. Perform only allowed
 status bookkeeping. Do not replay unrelated commits.
 
+Run every integration check, even after one fails. Do not stop on a failure;
+report it.
+
 Return:
 - new full program head
 - source and squash SHA per story
 - conflicts resolved
-- checks run
+- each check with pass/fail, and for each failure whether it also fails on
+  the wave parent
+```
+
+## Program fixer
+
+Resume the integrator with this block.
+
+```text
+You are fixing the program branch. Use standard Git and follow implement then
+tdd. Do not redesign, push, promote, or switch the user checkout.
+
+Program branch: {program_branch}
+Current program head: {program_head_sha}
+Wave parent or delivery base: {reference_sha}
+Frozen contracts: {frozen_contracts}
+Items to fix:
+{fixable_items}
+Checks to rerun: {integration_commands}
+
+Fix every item, including failures already present on {reference_sha}. Add a
+regression test for each behavior fix. Commit each fix separately using
+repository commit rules. If a fix would change a frozen contract or needs an
+undeclared write, do not fix it. Return it as needs-human: <reason>.
+
+Return:
+- new full program head
+- each fix SHA, and pre-existing yes/no
+- every check rerun, with results
+- needs-human items with reasons, or none
 ```
 
 ## Final program review
 
-Reuse Standards and Spec blocks with delivery-base...program-head and every
-manifest contract. Record both results before COMPLETE.
+Reuse the Standards and Spec blocks with delivery-base...program-head and
+every manifest contract. Record both results before COMPLETE.

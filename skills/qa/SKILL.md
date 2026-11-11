@@ -8,7 +8,7 @@ description: >-
 
 # QA
 
-Closes the **execution** loop. `implement` / `tdd` build a Story; `qa` turns what the user sees going wrong into a board item that can become the next Story (or a failing test on the current one).
+Closes the **execution** loop. `multi-agent-implement` (or hands-on `implement`) / `tdd` build a Story; `qa` turns what the user sees going wrong into a board item that can become the next Story (or a failing test on the current one).
 
 Not on the planning path (`wayfinder` → PRD → `to-issues`). Not a replacement for `tdd`.
 
@@ -26,7 +26,7 @@ Not on the planning path (`wayfinder` → PRD → `to-issues`). Not a replacemen
 3. Clarify one question at a time (`grill-me` discipline).
 4. **Reproduce or locate.** Don't ask what you can grep.
 5. Classify:
-   - **Bug, cause/seam already obvious** → durable issue; next is `implement` / `tdd`.
+   - **Bug, cause/seam already obvious** → durable issue; next is `multi-agent-implement` / `tdd`.
    - **Hard bug** (no tight repro, intermittent, "staring at code"): file what you have, then **`diagnosing-bugs`**. Do not guess-fix from this skill.
    - **Missing feature** → `to-issues` slice; say so if the PRD didn't cover it.
    - **Working-as-designed** → explain; glossary/ADR only if non-obvious.
@@ -42,4 +42,4 @@ When the user confirms a filed issue has merged to `default_branch`: if `board` 
 - **One issue per problem.**
 - **Domain language only.**
 - **A title that needs the body to be understood is a bad title.**
-- Do not start implementing or debugging from this skill. Obvious bugs → `implement` / `tdd`. Hard bugs → `diagnosing-bugs`.
+- Do not start implementing or debugging from this skill. Obvious bugs → `multi-agent-implement` / `tdd`. Hard bugs → `diagnosing-bugs`.
