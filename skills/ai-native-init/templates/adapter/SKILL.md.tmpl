@@ -31,7 +31,7 @@ Read `${root}/.ai-native.yml` for `packs`, `board`, `default_branch`, `decision_
 - **to-issues** — quiz, then write the ticket dir for this `layout` (`features/<feature>/tickets/<ID>/` or `planning/tickets/<ID>/`) with `## current` / `## ac` and a thin card when the board is markdown. Parent/child grouping is links, not nested directories. `plan.md` is the plan chat, not this skill. Tracker writes only when the user asks.
 - **multi-agent-implement / implement** — Story is `${root}/INDEX.md`'s `ticket` → that dir's INDEX.md + plan.md. Execute the plan; set `in_review`, not `done`. After merge to `${default_branch}`, `ship-ticket` if `board` is markdown. Do not promote feature decisions from a ticket close.
 - **code-review** — spec source is INDEX.md + plan.md. Report only.
-- **qa** — missing feature or bug → that layout's ticket dir, plus a board card when the board is markdown.
+- **qa** — write ACCEPTANCE.md in the ticket dir. Tracker writes only when the user asks.
 
 ## Do not
 

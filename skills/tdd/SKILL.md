@@ -49,7 +49,7 @@ Then back to 3 for the next behavior.
 1. List acceptance criteria as a checklist.
 2. For each: red → green → refactor.
 3. Full suite green → PR if asked → link the Story.
-4. Bugs that aren't this ticket → `qa` (not a guess-fix).
+4. Bugs that aren't this ticket: tell the user (not a guess-fix). Hard bugs → diagnosing-bugs.
 ```
 
 ## Lineage

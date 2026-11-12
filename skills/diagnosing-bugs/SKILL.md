@@ -4,14 +4,14 @@ description: >-
   Phase-gated diagnosis for hard bugs and performance regressions: build a
   loop that goes red on this symptom, minimise, hypothesise, instrument, then
   fix with a regression test. Use when the user says "diagnose", "debug this",
-  or qa hands off a bug with no tight repro yet.
+  or qa reports a failing AC with no tight repro yet.
 ---
 
 # Diagnosing Bugs
 
 Hard-bug hunter. Skip a phase only when you can say why.
 
-Not `qa` (that files the ticket). Not `implement` (that builds a decided Story). Not `tdd` (that is the loop once a seam exists). This skill **finds the cause**. After a correct seam exists, it drives `tdd` for the regression.
+Not `qa` (that runs the AC). Not `implement` (that builds a decided Story). Not `tdd` (that is the loop once a seam exists). This skill **finds the cause**. After a correct seam exists, it drives `tdd` for the regression.
 
 Read `CONTEXT.md` and nearby ADRs first.
 
@@ -20,7 +20,7 @@ Read `CONTEXT.md` and nearby ADRs first.
 ## Where it sits
 
 ```
-qa ── clear bug, seam obvious ──► implement / tdd
+qa ── failing AC, seam obvious ──► implement / tdd
   └── hard / no red loop yet ──► diagnosing-bugs
 user says "debug this" ─────────► diagnosing-bugs
 diagnosing-bugs ──► tdd (regression) ──► code-review

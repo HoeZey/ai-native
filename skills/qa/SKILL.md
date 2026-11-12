@@ -1,45 +1,27 @@
 ---
 name: qa
 description: >-
-  Turn a user-reported problem into a durable, domain-language Jira issue with
-  a failing-test sketch. Use when the user says "/qa", "let's QA this", or
-  "I'm seeing a bug". Not triage; not implement.
+  Run the current ticket's AC in the browser with the repo Playwright setup,
+  then report per AC.
 ---
 
 # QA
 
-Closes the **execution** loop. `multi-agent-implement` (or hands-on `implement`) / `tdd` build a Story; `qa` turns what the user sees going wrong into a board item that can become the next Story (or a failing test on the current one).
-
-Not on the planning path (`wayfinder` → PRD → `to-issues`). Not a replacement for `tdd`.
-
-## A durable issue
-
-- **Survives a week without context.**
-- **Uses domain language** from `CONTEXT.md`.
-- **Points to a test that doesn't exist yet.**
-- **Describes the observed problem**, not a guessed cause.
+Run the current ticket's acceptance criteria in the browser. Report each criterion. The user makes the pass or fail call.
 
 ## Workflow
 
-1. Read `CONTEXT.md` and the relevant PRD.
-2. Let the user describe the problem freely.
-3. Clarify one question at a time (`grill-me` discipline).
-4. **Reproduce or locate.** Don't ask what you can grep.
-5. Classify:
-   - **Bug, cause/seam already obvious** → durable issue; next is `multi-agent-implement` / `tdd`.
-   - **Hard bug** (no tight repro, intermittent, "staring at code"): file what you have, then **`diagnosing-bugs`**. Do not guess-fix from this skill.
-   - **Missing feature** → `to-issues` slice; say so if the PRD didn't cover it.
-   - **Working-as-designed** → explain; glossary/ADR only if non-obvious.
-6. **Read [`template.md`](template.md).** Write. Discover `{root}` from `context/INDEX.md`, else `docs/INDEX.md`, and `layout` / `board` / `tracker` from `{root}/.ai-native.yml`. Write the ticket in that layout's ticket directory (`features/<feature>/tickets/<ID>/INDEX.md` or `planning/tickets/<ID>/INDEX.md`) and a thin card when `board` is markdown. Publish to Jira only when `tracker.kind` is `jira` and the user agrees — same quiz-before-publish habit as `to-issues`. Use the project's parent link when hierarchy is a declared capability. Do not create a `docs/planning/` tree. Do not start `ship-ticket` from filing.
+1. Setup check. Look for a repo skill at .cursor/skills/*-playwright/SKILL.md or .agents/skills/*-playwright/SKILL.md. Read its Project line and confirm that path exists. If either is missing, stop, flag it, and use AskQuestion to offer two options: build the Playwright setup first, or stop. Do not write tests ad hoc. The check does not depend on language. On "build first", end with this fenced paste prompt:
 
-## Closing a fix
+```text
+Build a self-contained Playwright setup in this repo for /qa: a <repo>-playwright skill at .cursor/skills/<repo>-playwright/SKILL.md, the Playwright project, a login seed, and selector rules (data-test-id, then role, then label, then text; locator assertions; no fixed waits; keep the assertion on a failure), and a helper that screenshots each finished action after its assertion passes. The skill starts with Project, Acceptance scratch, Report, and Evidence lines. Do not install third-party Playwright skill packs or the Playwright planner, generator, or healer.
+```
 
-When the user confirms a filed issue has merged to `default_branch`: if `board` is markdown and `ship-ticket` is installed, run it. If the tracker is external, transition only when they explicitly ask. Do not create a markdown board in order to close a tracker issue. Do not promote feature decisions from a single fix. This skill still does not implement the fix.
-
-## Hard rules
-
-- **Don't ask what you can grep for.**
-- **One issue per problem.**
-- **Domain language only.**
-- **A title that needs the body to be understood is a bad title.**
-- Do not start implementing or debugging from this skill. Obvious bugs → `multi-agent-implement` / `tdd`. Hard bugs → `diagnosing-bugs`.
+2. Resolve the ticket in this order: the argument, the tcd-NNNN in the branch name, the epic INDEX ticket field, then ask.
+3. Read the AC from the local ticket INDEX ac section. With no local ticket, read the tracker (read-only).
+4. Map each AC bullet to one scenario with preconditions, steps, and expected outcome. Mark a bullet "not browser-testable" when it is BE-only, and point to the tests listed in the INDEX tests field. Show the table and get one confirm.
+5. Run the repo skill's preflight. Write the scratch tests in the place the repo skill names, and follow its rules. Each test ends with the repo's evidence helper, called after the AC's assertion, whenever the finished state is visible on screen.
+6. Run the tests, with the evidence folder pointed at <ticket dir>/acceptance/ in the way the repo skill's Evidence line says. Only fix locator mistakes, with at most two reruns per test. Keep the assertions. Do not skip, xfail, fixme, or add sleeps. If a precondition is cheap, create its data in the test. If not, mark the AC blocked and name the missing data.
+7. Write ACCEPTANCE.md in the ticket dir from acceptance-template.md in this skill folder. The verdict per AC is pass, fail, blocked, or not browser-testable. A pass embeds its screenshot, or says "no screenshot" with the reason. A fail links its failure screenshot and trace, plus the error line. Also record the commit SHA, BASE_URL, and date. End with a PR evidence block: the passed ACs in order, with one line of AC text and one image line each, ready for the user to paste into the PR description.
+8. The user makes the pass or fail call. Do not tick AC, change status, or write to the tracker unless the user asks.
+9. Phase exit: on any fail, paste /multi-agent-implement KEY with "read ACCEPTANCE.md". When all pass, emit no paste.
