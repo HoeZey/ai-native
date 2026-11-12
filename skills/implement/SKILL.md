@@ -19,7 +19,7 @@ Read `decision_policy` in `{root}/.ai-native.yml` when it is set. If it is `lock
 
 Otherwise a preliminary decision is the working plan, not a law. If the user wants a different choice, or the written choice cannot ship, edit it and continue. On `layout: features` that file is `features/<feature>/decisions/<id>.md`. On `sprints` or `epics` it is that folder's `decisions.md` log. Do not answer "this has already been decided." A record in `{root}/decisions/` is final because that feature has merged. Change it by superseding, and put the new choice on the feature that will change the code. If a preliminary choice already shipped in an earlier ticket on the same feature, the change includes the code. If you replace an id, update references that cite it.
 
-`tdd` is the test loop this skill drives. `qa` is not this skill — file bugs there after the fact.
+tdd is the test loop this skill drives. qa is not this skill: it runs the ticket AC after the slice is committed.
 
 ## When to use
 
@@ -32,7 +32,7 @@ Otherwise a preliminary decision is the working plan, not a law. If the user wan
 | A spec not yet sliced | `to-issues` first |
 | Not written down | `grill-me` / `wayfinder` — not this skill |
 | One behaviour, no ticket | `tdd` directly |
-| User reporting a bug | `qa` (file it) |
+| User reporting a bug | tdd when the seam is obvious; diagnosing-bugs otherwise |
 | Hard bug / "debug this" | `diagnosing-bugs` |
 
 Discover the memory root: `context/INDEX.md` then `docs/INDEX.md`. `{root}` is that folder. When `layout` is `features`, the Story is `{root}/features/<feature>/tickets/<KEY>/`. Otherwise `{root}/planning/tickets/<KEY>/`.
@@ -72,4 +72,4 @@ When the parent is a multi-agent-implement coordinator (ticket or program mode):
 
 ## Lineage
 
-Orchestrator shape from [Matt Pocock's implement](https://www.aihero.dev/skills-implement). Local deltas: Beck `tdd`, worktrees for parallel-eligible tickets, remove those worktrees before the session ends, commit when green, review in a fresh session, `qa` stays a separate loop. Preliminary decisions stay editable until the feature merges.
+Orchestrator shape from [Matt Pocock's implement](https://www.aihero.dev/skills-implement). Local deltas: Beck `tdd`, worktrees for parallel-eligible tickets, remove those worktrees before the session ends, commit when green, review in a fresh session, `qa` (acceptance) stays a separate loop. Preliminary decisions stay editable until the feature merges.

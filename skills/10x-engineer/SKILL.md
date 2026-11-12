@@ -50,7 +50,7 @@ not use tdd, implement, or multi-agent-implement to plan.
 | 06 · BUILD (hands-on) | implement | Fallback when you want to be in the loop, or no subagents. One Story; no redesign; drives tdd. Also the nested implementer role. |
 | 06 · BUILD (loop) | tdd | Red / green / **refactor while green** (Beck; collapse overlapping tests in that refactor). |
 | 06b · BUILD-PROGRAM | multi-agent-implement run | After approval, a fresh Agent chat runs /multi-agent-implement run <manifest-path>. Waves of the same loop, then integrate. |
-| 07 · QA | qa | User-reported problems → durable issues. Obvious bugs → implement. |
+| 07 · QA | qa | Acceptance: run the ticket AC with the repo Playwright setup; report per AC in ACCEPTANCE.md. |
 | 07 · DIAGNOSE | diagnosing-bugs | Hard bugs: red loop first, then cause, then tdd regression. |
 | 08 · REVIEW | code-review | Standards vs Spec, fresh session, after a commit. Report only; do not implement. |
 
@@ -78,9 +78,7 @@ not use tdd, implement, or multi-agent-implement to plan.
 - **Nested Task is allowed inside multi-agent-implement only.** A fresh subagent is the fresh session for implement and code-review. Do not paste "open a new chat" at the user.
 - **Mode boundary is mandatory.** PROGRAM-PLAN runs in Plan mode and stops for
   approval. BUILD-PROGRAM and ticket mode run in Agent mode.
-- **qa files; diagnosing-bugs hunts.** Obvious bug → ticket then implement. No
-  red loop yet / intermittent / "debug this" → diagnosing-bugs. Neither is
-  planning.
+- **qa accepts; diagnosing-bugs hunts.** qa runs the ticket AC after build. Obvious bug → implement or tdd. No red loop yet / intermittent / "debug this" → diagnosing-bugs. Neither is planning.
 - **tdd here is Beck** (refactor in the loop). Current Matt tdd is red-green only.
 - **Phase done → Phase exit paste.** Last message is a fenced prompt for the next chat. The agent cannot open a new IDE chat. Nested Task is the same conversation — do not start the next phase that way. multi-agent-implement is the exception: nested implement / review / integrate are roles inside that one phase.
 
@@ -112,7 +110,8 @@ If there is no next phase (grill still open, map still foggy, user said stop), o
 | implement committed (solo) | /code-review |
 | implement committed (nested) | (no paste; coordinator continues) |
 | review has findings | /multi-agent-implement <KEY> (read plan.md code-review section) |
-| qa filed a ticket | /multi-agent-implement <KEY> |
+| implement or code-review green | /qa <KEY> |
+| qa has a failing AC | /multi-agent-implement <KEY> (read ACCEPTANCE.md) |
 
 ## Worth adopting once
 
